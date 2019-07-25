@@ -7,11 +7,16 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 // possible endgames
 // when board is not at endgame, 'none' is used
 export enum EndgameStatus {
-  none = -1,
-  draw = 0,
+  none = 0,
   x = 1,
   o = 2,
+  draw = 3,
 }
+
+let isEndgame = (endgameStatus: EndgameStatus) => {
+  return endgameStatus != EndgameStatus.none;
+}
+
 // symbols that are stored on the board
 // board starts filled with empty positions
 // when a player moves on empty position it becomes his
@@ -39,9 +44,10 @@ export class TictactoeBoardComponent implements OnInit {
 
   // dimensions of the board: size_ x size_
   private size_: number = 3;
-
-  // TODO: change turns
-
+  // first player is x
+  private currentTurn_ = PlayerSymbols.x;
+  // number of turns elapsed
+  private turnNo_ = 0;
 
   constructor() {
     // initialize a board 2darray with empty cells
@@ -54,15 +60,38 @@ export class TictactoeBoardComponent implements OnInit {
   ngOnInit() {
   }
 
+  checkDraw(){
+    for (let rowNo = 0; rowNo < this.boardArray_.length; rowNo++) {
+      for (let colNo = 0; colNo < this.boardArray_[rowNo].length; colNo++) {
+        if(this.isEmpty(rowNo, colNo)){
+          return EndgameStatus.none;
+        }
+      }
+    }
+    return EndgameStatus.draw;
+  }
+
   // checks and handles endgame states
   checkEndgame(){
-    let isEndgame: boolean = false;
+    // endgame result
     let endResult = EndgameStatus.none;
-    // TODO:
-    // check board array for win or draw
-    if (isEndgame){
+
+    // TODO: check board array for win
+    if (!isEndgame(endResult)) {
+      // endResult = this.checkWin();
+      // ...
+    }
+
+    // check board array for draw
+    if (!isEndgame(endResult)) {
+      endResult = this.checkDraw();
+    }
+
+    // emit event if game ended
+    if (isEndgame(endResult)){
       this.endgameEvent.emit(endResult);
     }
+    return endResult;
   }
 
   // checks if this cell is empty by its coordinates
@@ -71,11 +100,40 @@ export class TictactoeBoardComponent implements OnInit {
     return this.boardArray_[rowNo][colNo] == PlayerSymbols.empty;
   }
 
+
+  makeMove(rowNo, colNo){
+    if (this.isEmpty(rowNo, colNo)) {
+      // change symbol to whichever player is up
+      this.boardArray_[rowNo][colNo] = this.currentTurn_;
+      this.turnNo_++;
+      return true;
+    }
+    return false;
+  }
+
+  nextTurn(){
+    // change current turn player
+    switch (this.currentTurn_){
+    case PlayerSymbols.x:
+      this.currentTurn_ = PlayerSymbols.o;
+      break;
+    case PlayerSymbols.o:
+      this.currentTurn_ = PlayerSymbols.x;
+      break;
+    }
+  }
+
   // click handler for a cell position
   clickCell(rowNo, colNo) {
-    if (this.isEmpty(rowNo, colNo)){
-      // TODO: change symbol to whichever player is next
-      this.boardArray_[rowNo][colNo] = PlayerSymbols.x;
+    // try to do move
+    let moved: boolean = this.makeMove(rowNo, colNo);
+    if (moved) {
+      // move might have ended the game, check
+      let endgameStatus: EndgameStatus = this.checkEndgame();
+      // if move succedded and game is not over, go to next turn
+      if (!isEndgame(endgameStatus)) {
+        this.nextTurn();
+      }
     }
   }
 
