@@ -38,7 +38,7 @@ export let endgameStatusFromSymbol = (playerSymbol: PlayerSymbols) => {
 // lets players click to play their moves
 // emits events:
 //  when board reaches endgame state
-//  TODO: when turn changes to another player's
+//  when turn changes to another player's
 @Component({
   selector: 'app-tictactoe-board',
   templateUrl: './tictactoe-board.component.html',
@@ -47,6 +47,8 @@ export let endgameStatusFromSymbol = (playerSymbol: PlayerSymbols) => {
 export class TictactoeBoardComponent implements OnInit {
   // emits event when game reaches conclusion
   @Output() endgameEvent = new EventEmitter<EndgameStatus>();
+  // emits event when turn/active player changes
+  @Output() playerTurnEvent = new EventEmitter<PlayerSymbols>();
 
   // 2darray with board information
   private boardArray_: PlayerSymbols[][];
@@ -240,6 +242,8 @@ export class TictactoeBoardComponent implements OnInit {
       // if move succedded and game is not over, go to next player
       if (!this.isEndgame()) {
         this.nextPlayer();
+        // tell subscribers
+        this.playerTurnEvent.emit(this.currentTurn_);
       }
     }
   }
