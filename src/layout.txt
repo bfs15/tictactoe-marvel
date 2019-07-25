@@ -1,0 +1,12 @@
+
+App
+	Header
+	Game
+		BoardCharacterSelection
+		# in this case players input characters names as text
+		GameScore
+		# characters and score are displayed
+		TictactoeBoard
+		# game board where players interact
+	Footer
+	# marvel
