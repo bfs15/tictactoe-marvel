@@ -109,4 +109,36 @@ describe('TictactoeBoardComponent', () => {
     });
     drawMoves(component);
   });
+
+  it('should emit player turn event on first valid move', (done) => {
+    // after next click, should be PlayerSymbols.o turn
+    let subscription = component.playerTurnEvent.subscribe(g => {
+      expect(g).toEqual(PlayerSymbols.o);
+      done();
+    });
+    component.clickCell(0, 0); // first X play
+  });
+
+  it('should emit player turn event on second valid move', (done) => {
+    component.clickCell(0, 0); // first X play
+    // after next click, should be PlayerSymbols.x turn
+    let subscription = component.playerTurnEvent.subscribe(g => {
+      expect(g).toEqual(PlayerSymbols.x);
+      done();
+    });
+    component.clickCell(0, 2); // O play
+  });
+
+  it('should not emit player turn event on invalid move', (done) => {
+    component.clickCell(0, 0); // first X play
+    // after next click, should be PlayerSymbols.x turn
+    let playerTurnCallback = (g) => {
+      expect(g).toEqual(PlayerSymbols.x);
+      done();
+    }
+    component.playerTurnEvent.subscribe(playerTurnCallback);
+    component.clickCell(0, 0); // invalid O play
+    component.clickCell(0, 0); // invalid O play
+    component.clickCell(0, 1); // valid O play
+  });
 });
