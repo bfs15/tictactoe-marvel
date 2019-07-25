@@ -40,6 +40,9 @@ export class TictactoeBoardComponent implements OnInit {
   // dimensions of the board: size_ x size_
   private size_: number = 3;
 
+  // TODO: change turns
+
+
   constructor() {
     // initialize a board 2darray with empty cells
     this.boardArray_ = new Array<Array<PlayerSymbols>>(this.size_);
@@ -51,6 +54,7 @@ export class TictactoeBoardComponent implements OnInit {
   ngOnInit() {
   }
 
+  // checks and handles endgame states
   checkEndgame(){
     let isEndgame: boolean = false;
     let endResult = EndgameStatus.none;
@@ -59,6 +63,39 @@ export class TictactoeBoardComponent implements OnInit {
     if (isEndgame){
       this.endgameEvent.emit(endResult);
     }
+  }
+
+  // checks if this cell is empty by its coordinates
+  // (cell coordinates) => if they are empty
+  isEmpty(rowNo, colNo) {
+    return this.boardArray_[rowNo][colNo] == PlayerSymbols.empty;
+  }
+
+  // click handler for a cell position
+  clickCell(rowNo, colNo) {
+    if (this.isEmpty(rowNo, colNo)){
+      // TODO: change symbol to whichever player is next
+      this.boardArray_[rowNo][colNo] = PlayerSymbols.x;
+    }
+  }
+
+  // returns the thumbnail of the players of this positions
+  // returns empty string if none in the cell
+  playerImage(rowNo, colNo) {
+    // TODO: return actual player image
+    if (this.isEmpty(rowNo, colNo)){
+      return "";
+    }
+    return "http://i.annihil.us/u/prod/marvel/i/mg/a/10/528d369de3e4f.jpg";
+  }
+
+  // get symbol string from cell position
+  getCellSymbolString(rowNo, colNo){
+    return PlayerSymbols[this.boardArray_[rowNo][colNo]];
+  }
+
+  get boardArray(){
+    return this.boardArray_;
   }
 
 }

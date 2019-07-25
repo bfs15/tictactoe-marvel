@@ -1,3 +1,10 @@
-<p>
-  tictactoe-board works!
-</p>
+<table id="boardArray">
+  <tr *ngFor="let row of boardArray; index as rowNo">
+    <td *ngFor="let col of boardArray[rowNo]; index as colNo">
+      <div data-id="{{rowNo}}-{{colNo}}" (click)="clickCell(rowNo, colNo)" class="pointer">
+        {{getCellSymbolString(rowNo,colNo)}}
+        <img [src]="playerImage(rowNo,colNo)" />
+      </div>
+    </td>
+  </tr>
+</table>

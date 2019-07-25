@@ -1,0 +1,33 @@
+
+.pointer {
+  cursor: pointer;
+}
+
+img {
+  width: 80px;
+}
+
+table {
+  border: none;
+  border-collapse: collapse;
+}
+
+table td {
+  border-left: 4px solid #000;
+  padding: 14px;
+  width: 100px;
+  height: 100px;
+}
+
+table tr {
+  border-top: 4px solid #000;
+}
+
+
+table tr:first-child {
+  border-top: none;
+}
+
+table td:first-child {
+  border-left: none;
+}
