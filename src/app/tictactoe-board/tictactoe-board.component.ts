@@ -5,14 +5,13 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 // First player is always X
 
 // possible endgames
-// when board is not at endgame, 'none' is used
 export enum EndgameStatus {
   none = 0,
   x = 1,
   o = 2,
   draw = 3,
 }
-
+// when board is not at endgame, 'EndgameStatus.none' is used
 let isEndgame = (endgameStatus: EndgameStatus) => {
   return endgameStatus != EndgameStatus.none;
 }
@@ -26,6 +25,20 @@ export enum PlayerSymbols {
   o = 2,
 }
 
+// turns a player symbol in the endgame status of its win
+export let endgameStatusFromSymbol = (playerSymbol: PlayerSymbols) => {
+  // get player string
+  let playerSymbolString = PlayerSymbols[playerSymbol];
+  // get EndgameStatus from player string
+  let endgameStatus: EndgameStatus = EndgameStatus[playerSymbolString];
+  return endgameStatus;
+}
+
+// Board component:
+// lets players click to play their moves
+// emits events:
+//  when board reaches endgame state
+//  TODO: when turn changes to another player's
 @Component({
   selector: 'app-tictactoe-board',
   templateUrl: './tictactoe-board.component.html',
@@ -48,6 +61,8 @@ export class TictactoeBoardComponent implements OnInit {
   private currentTurn_ = PlayerSymbols.x;
   // number of turns elapsed
   private turnNo_ = 0;
+  // board current EndgameStatus
+  private endResult_ = EndgameStatus.none;
 
   constructor() {
     // initialize a board 2darray with empty cells
@@ -60,38 +75,130 @@ export class TictactoeBoardComponent implements OnInit {
   ngOnInit() {
   }
 
+  isEndgame() {
+    return isEndgame(this.endResult_);
+  }
+
+  // checks if game ended in a draw, returns EndgameStatus
   checkDraw(){
     for (let rowNo = 0; rowNo < this.boardArray_.length; rowNo++) {
       for (let colNo = 0; colNo < this.boardArray_[rowNo].length; colNo++) {
         if(this.isEmpty(rowNo, colNo)){
-          return EndgameStatus.none;
+          this.endResult_ = EndgameStatus.none;
+          return;
         }
       }
     }
-    return EndgameStatus.draw;
+    this.endResult_ = EndgameStatus.draw;
+    return;
+  }
+
+  // These next functions check possible win cenarios
+
+  checkWinRow() {
+    // for every row
+    for (let rowNo = 0; rowNo < this.size_; rowNo++) {
+      // count how many symbols of the player are in the row
+      let colNo = 0;
+      for (; colNo < this.size_; colNo++) {
+        // stop counting if a diff symbol is found
+        if (this.getCell(rowNo, colNo) != this.currentTurn_) {
+          break;
+        }
+      }
+      // if reached end of row, every symbol in the row was equal to currentTurn_
+      if (colNo == this.size_) {
+        // win for the current player
+        return endgameStatusFromSymbol(this.currentTurn_);
+      }
+    }
+    return EndgameStatus.none;
+  }
+
+  checkWinCol() {
+    // for every column
+    for (let colNo = 0; colNo < this.size_; colNo++) {
+      // count how many symbols of the player are in the row
+      let rowNo = 0;
+      for (; rowNo < this.size_; rowNo++) {
+        // stop counting if a diff symbol is found
+        if (this.getCell(rowNo, colNo) != this.currentTurn_) {
+          break;
+        }
+      }
+      // if reached end of col, every symbol in the col was equal to currentTurn_
+      if (rowNo == this.size_) {
+        // win for the current player
+        return endgameStatusFromSymbol(this.currentTurn_);
+      }
+    }
+    return EndgameStatus.none;
+  }
+
+  checkWinDiag() {
+    // diag
+    let rowNo = 0;
+    for (; rowNo < this.size_; rowNo++) {
+      // get diagonal cell, i == j
+      if (this.getCell(rowNo, rowNo) != this.currentTurn_){
+        break;
+      }
+    }
+    // if reached end of diag, every symbol in the diag was equal to currentTurn_
+    if (rowNo == this.size_) {
+      // win for the current player
+      return endgameStatusFromSymbol(this.currentTurn_);
+    }
+
+    // anti diag
+    rowNo = 0
+    for (; rowNo < this.size_; rowNo++) {
+      // get diagonal cell, i == j
+      if (this.getCell(rowNo, (this.size_ - 1) - rowNo) != this.currentTurn_) {
+        break;
+      }
+    }
+    // if reached end of diag, every symbol in the diag was equal to currentTurn_
+    if (rowNo == this.size_) {
+      // win for the current player
+      return endgameStatusFromSymbol(this.currentTurn_);
+    }
+    return EndgameStatus.none;
+  }
+
+  // checks win state of the board, returns EndgameStatus
+  checkWin() {
+    // check row win
+    if (!this.isEndgame()) {
+      this.endResult_ = this.checkWinRow();
+    }
+    // check col win
+    if (!this.isEndgame()) {
+      this.endResult_ = this.checkWinCol();
+    }
+    // check diagonal win
+    if (!this.isEndgame()) {
+      this.endResult_ = this.checkWinDiag();
+    }
   }
 
   // checks and handles endgame states
   checkEndgame(){
-    // endgame result
-    let endResult = EndgameStatus.none;
-
-    // TODO: check board array for win
-    if (!isEndgame(endResult)) {
-      // endResult = this.checkWin();
-      // ...
+    // check board array for win
+    if (!this.isEndgame()) {
+      this.checkWin();
     }
 
     // check board array for draw
-    if (!isEndgame(endResult)) {
-      endResult = this.checkDraw();
+    if (!this.isEndgame()) {
+      this.checkDraw();
     }
 
     // emit event if game ended
-    if (isEndgame(endResult)){
-      this.endgameEvent.emit(endResult);
+    if (this.isEndgame()){
+      this.endgameEvent.emit(this.endResult_);
     }
-    return endResult;
+    return this.endResult_;
   }
 
   // checks if this cell is empty by its coordinates
@@ -102,7 +209,7 @@ export class TictactoeBoardComponent implements OnInit {
 
 
   makeMove(rowNo, colNo){
-    if (this.isEmpty(rowNo, colNo)) {
+    if (!this.isEndgame() && this.isEmpty(rowNo, colNo)) {
       // change symbol to whichever player is up
       this.boardArray_[rowNo][colNo] = this.currentTurn_;
       this.turnNo_++;
@@ -111,7 +218,7 @@ export class TictactoeBoardComponent implements OnInit {
     return false;
   }
 
-  nextTurn(){
+  nextPlayer(){
     // change current turn player
     switch (this.currentTurn_){
     case PlayerSymbols.x:
@@ -129,10 +236,10 @@ export class TictactoeBoardComponent implements OnInit {
     let moved: boolean = this.makeMove(rowNo, colNo);
     if (moved) {
       // move might have ended the game, check
-      let endgameStatus: EndgameStatus = this.checkEndgame();
-      // if move succedded and game is not over, go to next turn
-      if (!isEndgame(endgameStatus)) {
-        this.nextTurn();
+      this.checkEndgame();
+      // if move succedded and game is not over, go to next player
+      if (!this.isEndgame()) {
+        this.nextPlayer();
       }
     }
   }
@@ -152,8 +259,16 @@ export class TictactoeBoardComponent implements OnInit {
     return PlayerSymbols[this.boardArray_[rowNo][colNo]];
   }
 
+  getCell(rowNo, colNo) {
+    return this.boardArray_[rowNo][colNo];
+  }
+
   get boardArray(){
     return this.boardArray_;
+  }
+
+  get turnNo(){
+    return this.turnNo_
   }
 
 }
