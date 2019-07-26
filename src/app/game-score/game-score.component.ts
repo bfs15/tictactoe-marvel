@@ -11,9 +11,5 @@ export class GameScoreComponent {
   @Input() players: Player[];
 
   constructor(){
-    // TODO: receive players from parent
-    this.players = new Array<Player>(2);
-    this.players[0] = new Player("Spider-Woman");
-    this.players[1] = new Player("Spider-Man");
   }
 }

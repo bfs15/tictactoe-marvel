@@ -1,3 +1,4 @@
+import { GameScoreComponent } from './game-score/game-score.component';
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { TictactoeBoardComponent } from './tictactoe-board/tictactoe-board.component';
@@ -7,7 +8,8 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        TictactoeBoardComponent
+        TictactoeBoardComponent,
+        GameScoreComponent,
       ],
     }).compileComponents();
   }));
