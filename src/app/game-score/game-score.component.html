@@ -1,0 +1,10 @@
+<div *ngFor="let player of players; index as playerNo">
+  <div *ngIf="player">
+    <div class="playerName" data-id="playerName-{{playerNo}}">{{player.name}}</div>
+
+    <img class="playerImage" *ngIf="player.imageUrl" [src]="player.imageUrl" />
+    <div class="playerImage" *ngIf="!player.imageUrl"></div>
+
+    <div class="playerScore" data-id="playerScore-{{playerNo}}">{{player.score}}</div>    
+  </div>
+</div>
