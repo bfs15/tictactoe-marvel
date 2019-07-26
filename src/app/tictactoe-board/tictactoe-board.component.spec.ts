@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TictactoeBoardComponent, endgameStatusFromSymbol, PlayerSymbols, EndgameStatus } from './tictactoe-board.component';
+import { TictactoeBoardComponent, endgameStatusFromSymbol, PlayerSymbols, EndgameType } from './tictactoe-board.component';
 
 describe('TictactoeBoardComponent', () => {
   let component: TictactoeBoardComponent;
@@ -33,8 +33,10 @@ describe('TictactoeBoardComponent', () => {
   })
 
   it('should return matching endgame status for player turns', () => {
-    expect(endgameStatusFromSymbol(PlayerSymbols.x)).toEqual(EndgameStatus.x);
-    expect(endgameStatusFromSymbol(PlayerSymbols.o)).toEqual(EndgameStatus.o);
+    // x is first player, id 0
+    expect(endgameStatusFromSymbol(PlayerSymbols.x)).toEqual({ type: EndgameType.win, playerId: 0 });
+    // x is second player, id 1
+    expect(endgameStatusFromSymbol(PlayerSymbols.o)).toEqual({ type: EndgameType.win, playerId: 1 });
   })
 
   it('isEndgame should return false at the start', () => {
@@ -94,17 +96,17 @@ describe('TictactoeBoardComponent', () => {
     expect(component.isEndgame()).toBeTruthy();
   })  
 
-  it('should emit EndgameStatus.x event on row win', (done) => {
-    component.endgameEvent.subscribe(g => {
-      expect(g).toEqual(EndgameStatus.x);
+  it('should emit EndgameStatus.type win event on row win', (done) => {
+    component.endgameEvent.subscribe(endgameStatus => {
+      expect(endgameStatus.type).toEqual(EndgameType.win);
       done();
     });
     winMovesRow(component);
   });
 
-  it('should emit EndgameStatus.draw event', (done) => {
-    component.endgameEvent.subscribe(g => {
-      expect(g).toEqual(EndgameStatus.draw);
+  it('should emit EndgameStatus.type draw event', (done) => {
+    component.endgameEvent.subscribe(endgameStatus => {
+      expect(endgameStatus.type).toEqual(EndgameType.draw);
       done();
     });
     drawMoves(component);
@@ -112,8 +114,8 @@ describe('TictactoeBoardComponent', () => {
 
   it('should emit player turn event on first valid move', (done) => {
     // after next click, should be PlayerSymbols.o turn
-    let subscription = component.playerTurnEvent.subscribe(g => {
-      expect(g).toEqual(PlayerSymbols.o);
+    let subscription = component.playerTurnEvent.subscribe(playerTurn => {
+      expect(playerTurn).toEqual(PlayerSymbols.o);
       done();
     });
     component.clickCell(0, 0); // first X play

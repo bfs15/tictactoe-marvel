@@ -5,33 +5,41 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 // First player is always X
 
 // possible endgames
-export enum EndgameStatus {
+export enum EndgameType {
   none = 0,
-  x = 1,
-  o = 2,
-  draw = 3,
+  win = 1,
+  draw = 2,
 }
-// when board is not at endgame, 'EndgameStatus.none' is used
-let isEndgame = (endgameStatus: EndgameStatus) => {
-  return endgameStatus != EndgameStatus.none;
+// when board is not at endgame, 'EndgameType.none' is used
+let isEndgameType = (endgameType: EndgameType): boolean => {
+  return endgameType != EndgameType.none;
 }
 
 // symbols that are stored on the board
 // board starts filled with empty positions
 // when a player moves on empty position it becomes his
 export enum PlayerSymbols {
-  empty = 0,
-  x = 1,
-  o = 2,
+  empty = -1,
+  x = 0, // first player
+  o = 1, // second player
+}
+
+// get player id from its symbol
+// id 0 is the first player, 1 is the second and so on
+export let playerIdfromPlayerSymbol = (playerSymbol: PlayerSymbols): number => {
+  // in this case  it is simply the enum itself
+  return <number>playerSymbol;
+}
+
+// full information about endgame board status
+interface EndgameStatus {
+  type: EndgameType,  // type of endgame
+  playerId?: number, // which player won
 }
 
 // turns a player symbol in the endgame status of its win
-export let endgameStatusFromSymbol = (playerSymbol: PlayerSymbols) => {
-  // get player string
-  let playerSymbolString = PlayerSymbols[playerSymbol];
-  // get EndgameStatus from player string
-  let endgameStatus: EndgameStatus = EndgameStatus[playerSymbolString];
-  return endgameStatus;
+export let endgameStatusFromSymbol = (playerSymbol: PlayerSymbols): EndgameStatus => {  
+  return { type: EndgameType.win, playerId: playerIdfromPlayerSymbol(playerSymbol) };
 }
 
 // Board component:
@@ -59,12 +67,12 @@ export class TictactoeBoardComponent implements OnInit {
 
   // dimensions of the board: size_ x size_
   private size_: number = 3;
-  // first player is x
-  private currentTurn_ = PlayerSymbols.x;
+  // player that should move next
+  private currentTurn_: PlayerSymbols;
   // number of turns elapsed
-  private turnNo_;
+  private turnNo_: number;
   // board current EndgameStatus
-  private endResult_;
+  private endgameStatus_: EndgameStatus;
 
   constructor() {
     this.newBoard();
@@ -76,34 +84,37 @@ export class TictactoeBoardComponent implements OnInit {
     for (let row = 0; row < this.boardArray_.length; row++) {
       this.boardArray_[row] = new Array<PlayerSymbols>(this.size_).fill(PlayerSymbols.empty);
     }
+    // game start
     this.turnNo_ = 0;
-    this.endResult_ = EndgameStatus.none;
+    this.endgameStatus_ = {type: EndgameType.none, playerId: -1};
+    // first player is x
+    this.currentTurn_ = PlayerSymbols.x;
   }
 
   ngOnInit() {
   }
 
   isEndgame() {
-    return isEndgame(this.endResult_);
+    return isEndgameType(this.endgameStatus_.type);
   }
 
-  // checks if game ended in a draw, returns EndgameStatus
+  // checks if game ended in a draw, returns EndgameType
   checkDraw(){
     for (let rowNo = 0; rowNo < this.boardArray_.length; rowNo++) {
       for (let colNo = 0; colNo < this.boardArray_[rowNo].length; colNo++) {
         if(this.isEmpty(rowNo, colNo)){
-          this.endResult_ = EndgameStatus.none;
+          this.endgameStatus_.type = EndgameType.none;
           return;
         }
       }
     }
-    this.endResult_ = EndgameStatus.draw;
+    this.endgameStatus_.type = EndgameType.draw;
     return;
   }
 
   // These next functions check possible win cenarios
 
-  checkWinRow() {
+  checkWinRow(): EndgameStatus {
     // for every row
     for (let rowNo = 0; rowNo < this.size_; rowNo++) {
       // count how many symbols of the player are in the row
@@ -120,10 +131,10 @@ export class TictactoeBoardComponent implements OnInit {
         return endgameStatusFromSymbol(this.currentTurn_);
       }
     }
-    return EndgameStatus.none;
+    return {type: EndgameType.none};
   }
 
-  checkWinCol() {
+  checkWinCol(): EndgameStatus {
     // for every column
     for (let colNo = 0; colNo < this.size_; colNo++) {
       // count how many symbols of the player are in the row
@@ -140,7 +151,7 @@ export class TictactoeBoardComponent implements OnInit {
         return endgameStatusFromSymbol(this.currentTurn_);
       }
     }
-    return EndgameStatus.none;
+    return { type: EndgameType.none };
   }
 
   checkWinDiag() {
@@ -171,22 +182,22 @@ export class TictactoeBoardComponent implements OnInit {
       // win for the current player
       return endgameStatusFromSymbol(this.currentTurn_);
     }
-    return EndgameStatus.none;
+    return { type: EndgameType.none };
   }
 
-  // checks win state of the board, returns EndgameStatus
+  // checks win state of the board, returns EndgameType
   checkWin() {
     // check row win
     if (!this.isEndgame()) {
-      this.endResult_ = this.checkWinRow();
+      this.endgameStatus_ = this.checkWinRow();
     }
     // check col win
     if (!this.isEndgame()) {
-      this.endResult_ = this.checkWinCol();
+      this.endgameStatus_ = this.checkWinCol();
     }
     // check diagonal win
     if (!this.isEndgame()) {
-      this.endResult_ = this.checkWinDiag();
+      this.endgameStatus_ = this.checkWinDiag();
     }
   }
 
@@ -204,9 +215,9 @@ export class TictactoeBoardComponent implements OnInit {
 
     // emit event if game ended
     if (this.isEndgame()){
-      this.endgameEvent.emit(this.endResult_);
+      this.endgameEvent.emit(this.endgameStatus_);
     }
-    return this.endResult_;
+    return this.endgameStatus_;
   }
 
   // checks if this cell is empty by its coordinates
