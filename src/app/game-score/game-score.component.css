@@ -1,0 +1,19 @@
+#player-0 {
+  width: 50%;
+  float: left;
+  height: 230px;
+  overflow:hidden;
+  background: gray;
+}
+
+#player-1 {
+	width: 50%;
+	float: right;
+	height: 230px;
+	overflow:hidden;
+  background: gray;
+}
+
+img {
+	height: 160px;
+}
