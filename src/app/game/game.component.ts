@@ -1,3 +1,4 @@
+import { Player } from './../player';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
+  players: Player[] = undefined;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onEndgameEvent(event){
+    console.log(event);
   }
 
 }
