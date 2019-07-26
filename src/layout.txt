@@ -2,7 +2,7 @@
 App
 	Header
 	Game
-		BoardCharacterSelection
+		CharacterSelection
 		# in this case players input characters names as text
 		GameScore
 		# characters and score are displayed
