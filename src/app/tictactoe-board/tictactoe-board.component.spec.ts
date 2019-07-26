@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TictactoeBoardComponent, endgameStatusFromSymbol, PlayerSymbols, EndgameType } from './tictactoe-board.component';
+import { TictactoeBoardComponent, endgameStatusFromSymbol, PlayerSymbols } from './tictactoe-board.component';
+import { EndgameType } from '../board';
 
 describe('TictactoeBoardComponent', () => {
   let component: TictactoeBoardComponent;
