@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameComponent implements OnInit {
   players: Player[] = undefined;
+  private isBoardEndgame_: boolean = false;
 
   constructor() { }
 
@@ -15,7 +16,16 @@ export class GameComponent implements OnInit {
   }
 
   onEndgameEvent(event){
+    // TODO: add score to winning player
     console.log(event);
+    this.isBoardEndgame_ = true;
   }
 
+  onResetBoard(event) {
+    this.isBoardEndgame_ = false;
+  }
+
+  get isBoardEndgame(){
+    return this.isBoardEndgame_;
+  }
 }
