@@ -17,15 +17,15 @@ export class GameComponent implements OnInit {
 
   onEndgameEvent(event){
     // TODO: add score to winning player
-    console.log(event);
     this.isBoardEndgame_ = true;
   }
 
-  onResetBoard(event) {
+  onResetBoard(event, boardComponent) {
     this.isBoardEndgame_ = false;
+    boardComponent.newBoard();
   }
 
-  get isBoardEndgame(){
+  get isBoardEndgame(): boolean{
     return this.isBoardEndgame_;
   }
 }

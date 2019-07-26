@@ -62,16 +62,22 @@ export class TictactoeBoardComponent implements OnInit {
   // first player is x
   private currentTurn_ = PlayerSymbols.x;
   // number of turns elapsed
-  private turnNo_ = 0;
+  private turnNo_;
   // board current EndgameStatus
-  private endResult_ = EndgameStatus.none;
+  private endResult_;
 
   constructor() {
+    this.newBoard();
+  }
+
+  newBoard() {
     // initialize a board 2darray with empty cells
     this.boardArray_ = new Array<Array<PlayerSymbols>>(this.size_);
     for (let row = 0; row < this.boardArray_.length; row++) {
       this.boardArray_[row] = new Array<PlayerSymbols>(this.size_).fill(PlayerSymbols.empty);
     }
+    this.turnNo_ = 0;
+    this.endResult_ = EndgameStatus.none;
   }
 
   ngOnInit() {
