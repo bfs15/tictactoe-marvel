@@ -23,7 +23,6 @@ export class GameComponent implements OnInit {
     // TODO: implement character seletion
     this.players = [new Player("Spider-Woman", "http://i.annihil.us/u/prod/marvel/i/mg/a/10/528d369de3e4f.jpg"), new Player("Thanos")];
 
-    this.turnOrder_ = new Array<number>(this.players.length).fill(-1);
     this.chooseTurnOrder();
   }
 
@@ -56,7 +55,7 @@ export class GameComponent implements OnInit {
   chooseTurnOrder(){
     // make turn order list (list player indexes in turn order)
     // equal chance of choosing any index
-    let turnOrder = new Array<number>(this.turnOrder_.length);
+    let turnOrder = new Array<number>(this.players.length);
     let firstPlayerIndex = Math.floor(Math.random() * this.players.length);
     turnOrder[0] = firstPlayerIndex;
     if (turnOrder[0] == 0) {
