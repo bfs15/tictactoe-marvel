@@ -11,7 +11,7 @@ export class GameComponent implements OnInit {
   // list of players, undefined until selected by users
   players: Player[] = undefined;
   // whether board is at endgame state
-  public isBoardEndgame_: boolean = false;
+  private isBoardEndgame_: boolean = false;
   // list of players' Indexes by turn order
   // [x] = y means player[y] goes at turn x
   private turnOrder_: number[];
