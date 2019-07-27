@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { secrets } from 'src/environments/secrets';
 
 
 interface ICharacterCollection {
@@ -54,19 +55,42 @@ interface IMarvelResponse {
   providedIn: 'root'
 })
 export class CharacterService {
-  private url_: string = environment.marvelApiUrl;
-  private apiKey_: string = environment.marvelApiKey;
+  private readonly url_: string = environment.marvelApiUrl;
+  private readonly urlCharacters_: string = `${this.url_}/v1/public/characters`;
+  private readonly apiKey_: string = environment.marvelApiKey;
 
   constructor(private http: HttpClient) {
   }
 
+  // create and setup parameters for MarvelAPI request
   createParams(): HttpParams{
-    return new HttpParams().set('apikey', this.apiKey_);
+    let params = new HttpParams();
+    params.set('apikey', this.apiKey_);
+    // TODO: add timestamp
+    // params.set('ts', timestamp);
+    // TODO: hash = md5(ts+secrets.marvelApiKeyPrivate+publicKey)
+    // params.set('hash', hash);
+    return params;
   }
 
+  // TODO: handle error
+  private handleError(error: HttpErrorResponse) {
+    
+  };
+
+  // returns array with valid character names that start with 'name'
   getNameStartsWith(name: string): Observable<IMarvelResponse> {
-    const url = `${this.url_}/v1/public/characters`;
+    const url = this.urlCharacters_;
     let params = this.createParams().set('nameStartsWith', name);
-    return this.http.get<IMarvelResponse>(this.url_, { params: params});
+    // TODO: handle error
+    return this.http.get<IMarvelResponse>(url, { params: params });
+  }
+
+  // returns valid character with 'name' (if it exists)
+  getByName(name: string): Observable<IMarvelResponse> {
+    const url = this.urlCharacters_;
+    let params = this.createParams().set('name', name);
+    // TODO: handle error
+    return this.http.get<IMarvelResponse>(url, { params: params });
   }
 }
