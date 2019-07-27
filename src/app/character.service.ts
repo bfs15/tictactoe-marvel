@@ -5,7 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { secrets } from 'src/environments/secrets';
 import { Player } from './player';
-
+import { Md5 } from 'ts-md5/dist/md5';
 
 interface ICharacterCollection {
   available: number,
@@ -68,13 +68,13 @@ export class CharacterService {
   }
 
   // create and setup parameters for MarvelAPI request
-  createParams(): HttpParams{
+  createParams(): HttpParams {
+    let timestamp = String(new Date().getTime());
+    let hash = Md5.hashAsciiStr(timestamp + secrets.marvelApiKeyPrivate + this.apiKey_);
     return new HttpParams()
-    .set('apikey', this.apiKey_)
-    // TODO: add timestamp
-    // .set('ts', "timestamp")
-    // TODO: hash = md5(ts+secrets.marvelApiKeyPrivate+publicKey)
-    // .set('hash', "hash")
+      .set('apikey', this.apiKey_)
+      .set('ts', timestamp)
+      .set('hash', hash.toString())
   }
 
   // returns array with valid character names that start with 'name'
