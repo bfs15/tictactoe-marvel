@@ -57,8 +57,11 @@ interface IMarvelResponse {
   providedIn: 'root'
 })
 export class CharacterService {
+  // base Url
   private readonly url_: string = environment.marvelApiUrl;
+  // url for character requests
   private readonly urlCharacters_: string = `${this.url_}/v1/public/characters`;
+  // api key for request parameters
   private readonly apiKey_: string = environment.marvelApiKey;
 
   constructor(private http: HttpClient) {
