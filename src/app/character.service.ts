@@ -64,13 +64,12 @@ export class CharacterService {
 
   // create and setup parameters for MarvelAPI request
   createParams(): HttpParams{
-    let params = new HttpParams();
-    params.set('apikey', this.apiKey_);
+    return new HttpParams()
+    .set('apikey', this.apiKey_)
     // TODO: add timestamp
-    // params.set('ts', timestamp);
+    .set('ts', "timestamp")
     // TODO: hash = md5(ts+secrets.marvelApiKeyPrivate+publicKey)
-    // params.set('hash', hash);
-    return params;
+    .set('hash', "hash")
   }
 
   // TODO: handle error
