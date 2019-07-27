@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { secrets } from 'src/environments/secrets';
+import { Player } from './player';
 
 
 interface ICharacterCollection {
@@ -67,29 +69,67 @@ export class CharacterService {
     return new HttpParams()
     .set('apikey', this.apiKey_)
     // TODO: add timestamp
-    .set('ts', "timestamp")
+    // .set('ts', "timestamp")
     // TODO: hash = md5(ts+secrets.marvelApiKeyPrivate+publicKey)
-    .set('hash', "hash")
+    // .set('hash', "hash")
   }
 
-  // TODO: handle error
-  private handleError(error: HttpErrorResponse) {
-    
-  };
-
   // returns array with valid character names that start with 'name'
-  getNameStartsWith(name: string): Observable<IMarvelResponse> {
+  getNameStartsWith(name: string): Observable<string[]> {
     const url = this.urlCharacters_;
     let params = this.createParams().set('nameStartsWith', name);
-    // TODO: handle error
-    return this.http.get<IMarvelResponse>(url, { params: params });
+    return this.http.get<IMarvelResponse>(url, { params: params })
+      .pipe(
+        map((response: IMarvelResponse) => {
+          // return only character names
+          let characterNames: string[];
+          // map result data extracting only 'name' field
+          characterNames = response.data.results.map(character => character.name);
+          return characterNames;
+        }),
+        catchError(this.handleError)
+      );
   }
 
   // returns valid character with 'name' (if it exists)
-  getByName(name: string): Observable<IMarvelResponse> {
+  getByName(name: string): Observable<Player> {
     const url = this.urlCharacters_;
     let params = this.createParams().set('name', name);
-    // TODO: handle error
-    return this.http.get<IMarvelResponse>(url, { params: params });
+    
+    return this.http.get<IMarvelResponse>(url, { params: params })
+      .pipe(
+        map((response: IMarvelResponse) => {
+          // return only character names
+          let player: Player;
+          // map result data extracting only 'name' field
+          player = this.playerFromResponse(response.data.results[0]);
+          return player;
+        }),
+        catchError(this.handleError)
+      );
   }
+  // builds a Player from an ICharacter received from backend
+  private playerFromResponse(result: ICharacter): Player {
+    return new Player(
+      result.name, // name
+      result.thumbnail.path + result.thumbnail.extension // imageUrl
+    );
+  }
+
+  // error inspection
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred
+      console.error('A error occurred during Http request:', error.error.message);
+    } else {
+      // backend returned an unsuccessful code
+      // response body may contain a message or clues as to what went wrong
+      console.error(
+        'Backend returned code ', error.status,
+        'body was: ', error.error);
+    }
+    // return an observable with a user-facing error message
+    return throwError(
+      'Getting character information failed; please try again.');
+  };
 }
