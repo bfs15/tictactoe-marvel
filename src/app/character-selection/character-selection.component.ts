@@ -20,6 +20,8 @@ export class CharacterSelectionComponent implements OnInit {
   private isValidCharacterSelected_: boolean[];
   // number of players to select
   @Input() playerNo: number;
+  // number of players to select
+  private validCharacters_: string[][] = [["Spider", "Thanos", "Satella"], ["Subaru", "Felt", "Emilia"]];
 
   private players_: Player[];
 
@@ -61,4 +63,7 @@ export class CharacterSelectionComponent implements OnInit {
     return this.players_;
   }
 
+  get validCharacters(){
+    return this.validCharacters_;
+  }
 }
