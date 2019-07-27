@@ -1,3 +1,4 @@
+import { CharacterSelectionComponent } from './../character-selection/character-selection.component';
 import { EndgameType } from './../board';
 
 import { GameScoreComponent } from './../game-score/game-score.component';
@@ -16,7 +17,9 @@ describe('GameComponent', () => {
       declarations: [
         GameComponent,
         GameScoreComponent,
-        TictactoeBoardComponent, ]
+        TictactoeBoardComponent,
+        CharacterSelectionComponent,
+      ]
     })
     .compileComponents();
   }));

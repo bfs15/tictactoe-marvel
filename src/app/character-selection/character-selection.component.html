@@ -1,0 +1,13 @@
+<div *ngFor="let player of players; index as playerNo">
+  <h3>
+    Select your character
+  </h3>
+  <datalist id="validCharacters-{{playerNo}}">
+    <option *ngFor="let character of validCharacters[playerNo]" value="{{character}}"></option>
+  </datalist>
+  <form>
+    <input type="text" name="name" attr.list="validCharacters-{{playerNo}}" placeholder="character name" autofocus
+      (keyup)="onKeydown($event, playerNo)" autocomplete="off"/>
+    <input type="submit" value="Confirm" *ngIf="isValidCharacterSelected" (click)="onConfirmSelection($event, playerNo)">
+  </form>
+</div>

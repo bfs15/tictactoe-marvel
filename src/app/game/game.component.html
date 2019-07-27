@@ -1,3 +1,4 @@
+<app-character-selection [playerNo]="playerNo"></app-character-selection>
 <app-game-score [players]="players"></app-game-score>
 <app-tictactoe-board (endgameEvent)="onEndgameEvent($event)" #boardComponent></app-tictactoe-board>
 <button *ngIf="isBoardEndgame" (click)="onResetBoard($event, boardComponent)">Next match</button>

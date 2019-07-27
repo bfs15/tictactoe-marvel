@@ -8,8 +8,10 @@ import { EndgameStatus, EndgameType } from '../board';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
+  // number of players
+  private playerNo_: number = 2;
   // list of players, undefined until selected by users
-  players: Player[] = undefined;
+  players: Player[] = new Array<Player>(this.playerNo_);
   // whether board is at endgame state
   private isBoardEndgame_: boolean = false;
   // list of players' Indexes by turn order
@@ -84,5 +86,9 @@ export class GameComponent implements OnInit {
 
   get isBoardEndgame(): boolean{
     return this.isBoardEndgame_;
+  }
+
+  get playerNo(){
+    return this.playerNo_;
   }
 }
