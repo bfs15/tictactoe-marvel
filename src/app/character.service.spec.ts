@@ -36,11 +36,9 @@ describe('CharacterService', () => {
   });
 
   it('should return a list of characters', () => {
-    const name = "Thano";
+    const name = "Spider";
     service.getNameStartsWith(name).subscribe(result => {
-      // console.log(result);
-      // console.log(result.data.results[0].name);
-      expect(result).toBeTruthy();
+      expect(result.length > 0).toBeTruthy("response character names array empty");
     })
     // expect a request to be made
     const req = httpTestingController
@@ -49,14 +47,10 @@ describe('CharacterService', () => {
     // .expectOne('https://gateway.marvel.com:443/v1/public/characters');
     // the line above doesn't work with http parameters https://github.com/angular/angular/issues/19974
 
-    console.log("req.request.params", req.request.params);
+    expect(req.request.params.has("apikey")).toBeTruthy("No apikey");
+    expect(req.request.params.has("ts")).toBeTruthy("No timestamp");
+    expect(req.request.params.has("hash")).toBeTruthy("No hash");
     // respond with mock response
     req.flush(mockCharacterResponse);
-  });
-
-
-  it('should return a local list of characters', () => {
-    const name = "Sti";
-    console.log(service.getByNameStartsWithLocal(name));
   });
 });
