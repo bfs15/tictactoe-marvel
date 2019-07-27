@@ -53,19 +53,6 @@ describe('GameComponent', () => {
     ).toBeTruthy();
   });
 
-
-  it('should increase scores of players after board win state', () => {
-    // send artificial event that first player won
-    component.onEndgameEvent({ type: EndgameType.win, playerId: 0 });
-    // first player could be player[0] or player[1]
-    expect(
-      // at least one of them to have score 1 now
-      (component.players[0].score == 1 || component.players[1].score == 1)
-      // but not both
-      && ((component.players[0].score + component.players[1].score) == 1)
-    ).toBeTruthy();
-  });
-
   it('should be at endgame state after board EndgameEvent', () => {
     // send artificial event that board ended
     component.onEndgameEvent({ type: EndgameType.draw });
