@@ -1,4 +1,9 @@
-<h3>
-  Select your character
-</h3>
-<input type="text" (keydown)="onKeydown($event)" placeholder="character name"/>
+<div *ngFor="let player of players; index as playerNo">
+  <h3>
+    Select your character
+  </h3>
+  <form>
+    <input type="text" name="name" placeholder="character name" autofocus (keyup)="onKeydown($event, playerNo)" />
+    <input type="submit" value="Confirm" *ngIf="isValidCharacterSelected" (click)="onConfirmSelection($event, playerNo)">
+  </form>
+</div>
