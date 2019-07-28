@@ -1,5 +1,7 @@
+import { CharacterService } from './../character.service';
 import { Player } from './../player';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 interface SelectedCharacter {
   index: number,
@@ -25,7 +27,7 @@ export class CharacterSelectionComponent implements OnInit {
 
   private players_: Player[];
 
-  constructor() { }
+  constructor(private characterService: CharacterService) { }
 
   // fill arrays according to Input playerNo
   ngOnInit() {
@@ -37,26 +39,18 @@ export class CharacterSelectionComponent implements OnInit {
   }
 
   onKeydown($event, playerNo){
-    let characterName = $event.target.value;
-    this.validateCharacter(playerNo, characterName);
-    if (this.isValidCharacterSelected_[playerNo]){
-      this.players_[playerNo].name = characterName;
-      // TODO: get character url
-    }
+    // TODO: update this.validCharacters_ list for autocomplete
+    // let characterName = $event.target.value;
   }
-
-  onConfirmSelection($event, playerNo: number) {
-    let character: SelectedCharacter = { index: playerNo, player: this.players_[playerNo] };
-    this.playerSelectedEvent.emit(character);
-  }
-
-  validateCharacter(playerNo: number, characterName: string){
-    // TODO: validate character
-    this.isValidCharacterSelected_[playerNo] = true;
-  }
-
-  get isValidCharacterSelected(){
-    return this.isValidCharacterSelected_;
+  
+  onSubmit(form, playerNo: number) {
+    let characterName = form.value.name;
+    this.characterService.getByName(characterName).subscribe((player) => {
+      let character: SelectedCharacter = { index: playerNo, player: player };
+      this.playerSelectedEvent.emit(character);
+      this.isValidCharacterSelected_[playerNo] = true;
+      // TODO: handle error
+    });
   }
 
   get players(){

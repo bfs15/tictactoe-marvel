@@ -7,6 +7,7 @@ import { TictactoeBoardComponent } from './tictactoe-board/tictactoe-board.compo
 import { GameScoreComponent } from './game-score/game-score.component';
 import { GameComponent } from './game/game.component';
 import { CharacterSelectionComponent } from './character-selection/character-selection.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { CharacterSelectionComponent } from './character-selection/character-sel
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
   ],
   providers: [
     HttpClientModule,

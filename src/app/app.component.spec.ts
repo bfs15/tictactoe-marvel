@@ -5,6 +5,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { TictactoeBoardComponent } from './tictactoe-board/tictactoe-board.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -18,6 +19,7 @@ describe('AppComponent', () => {
       ],
       imports: [
         HttpClientModule,
+        FormsModule,
       ]
     }).compileComponents();
   }));

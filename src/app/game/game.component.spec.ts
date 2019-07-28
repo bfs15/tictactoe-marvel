@@ -8,6 +8,7 @@ import { GameComponent } from './game.component';
 import { TictactoeBoardComponent } from '../tictactoe-board/tictactoe-board.component';
 import { By } from '@angular/platform-browser';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule } from '@angular/forms';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -23,6 +24,7 @@ describe('GameComponent', () => {
       ],
       imports: [
         HttpClientTestingModule,
+        FormsModule,
       ]
     })
     .compileComponents();
