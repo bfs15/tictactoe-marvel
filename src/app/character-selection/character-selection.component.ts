@@ -3,7 +3,7 @@ import { Player } from './../player';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-interface SelectedCharacter {
+export interface SelectedCharacter {
   index: number,
   player: Player,
 }

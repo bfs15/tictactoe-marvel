@@ -1,6 +1,7 @@
 import { Player } from './../player';
 import { Component, OnInit } from '@angular/core';
 import { EndgameStatus, EndgameType } from '../board';
+import { SelectedCharacter } from '../character-selection/character-selection.component';
 
 @Component({
   selector: 'app-game',
@@ -23,9 +24,13 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {
     // TODO: implement character seletion
-    this.players = [new Player("Spider-Woman", "http://i.annihil.us/u/prod/marvel/i/mg/a/10/528d369de3e4f.jpg"), new Player("Thanos")];
+    this.players = new Array<Player>(this.playerNo);
 
     this.chooseTurnOrder();
+  }
+
+  onPlayerSelected($event: SelectedCharacter){
+    this.players[$event.index] = $event.player;
   }
 
   // return player index from his turn order
@@ -83,6 +88,7 @@ export class GameComponent implements OnInit {
     this.isBoardEndgame_ = false;
     boardComponent.newBoard();
   }
+
 
   get isBoardEndgame(): boolean{
     return this.isBoardEndgame_;
