@@ -9,10 +9,16 @@ import { TictactoeBoardComponent } from '../tictactoe-board/tictactoe-board.comp
 import { By } from '@angular/platform-browser';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
+import { Player } from '../player';
 
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
+  
+  let addPlayers = (component: GameComponent) => {
+    component.onPlayerSelected({ index: 0, player: new Player("Thanos") });
+    component.onPlayerSelected({ index: 1, player: new Player("Spider-Man") });
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -34,6 +40,8 @@ describe('GameComponent', () => {
     fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    addPlayers(component);
   });
 
   it('should create', () => {
