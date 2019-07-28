@@ -7,51 +7,7 @@ import { secrets } from 'src/environments/secrets';
 import { Player } from './player';
 import { Md5 } from 'ts-md5/dist/md5';
 
-interface ICharacterCollection {
-  available: number,
-    collectionURI: string,
-      items: {
-    resourceURI: string,
-      name: string
-  } [],
-    returned: number
-}
-
-interface ICharacter {
-  id: number,
-  name: string,
-  description: string,
-  modified: Date,
-  thumbnail: {
-    path: string,
-    extension: string
-  },
-  resourceURI: string,
-  comics: ICharacterCollection,
-  series: ICharacterCollection,
-  stories: ICharacterCollection,
-  events: ICharacterCollection,
-  urls: {
-    type: string,
-    url: string
-  }[]
-}
-
-interface IMarvelResponse {
-  code: number, // The HTTP status code of the returned result
-  status: string, // A string description of the call status
-  etag: string, // A digest value of the content
-  copyright: string, // The copyright notice for the returned result
-  attributionText: string, // The attribution notice for this result
-  attributionHTML: string, // An HTML representation of the attribution notice for this result
-  data: {
-    offset: number, // The requested offset(skipped results) of the call
-    limit: number, // The requested result limit
-    total: number, // The total number of results available
-    count: number, // The total number of results returned by this call
-    results: ICharacter[] // The list of entities returned by the call
-  }
-}
+import { ICharacter, IMarvelResponse} from './marvel-api';
 
 @Injectable({
   providedIn: 'root'
@@ -82,7 +38,7 @@ export class CharacterService {
     const url = this.urlCharacters_;
     let params = this.createParams().set('nameStartsWith', name);
     return this.http.get<IMarvelResponse>(url, { params: params })
-      .pipe(
+      .pipe( // handle response
         map((response: IMarvelResponse) => {
           // return only character names
           let characterNames: string[];
@@ -100,11 +56,14 @@ export class CharacterService {
     let params = this.createParams().set('name', name);
     
     return this.http.get<IMarvelResponse>(url, { params: params })
-      .pipe(
+      .pipe( // handle response
         map((response: IMarvelResponse) => {
-          // return only character names
+          if(response.data.results.length < 1){
+            // no character found
+            throw new ErrorEvent("Character not found");
+          }
+          // return only the first character
           let player: Player;
-          // map result data extracting only 'name' field
           player = this.playerFromResponse(response.data.results[0]);
           return player;
         }),
@@ -121,18 +80,46 @@ export class CharacterService {
 
   // error inspection
   private handleError(error: HttpErrorResponse) {
+    let errorMessage: string = "";
     if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred
-      console.error('A error occurred during Http request:', error.error.message);
+      // client-side or network error
+      console.error('A error occurred during Http request:', error.error.message, error.error);
+    } else if (error instanceof ErrorEvent) {
+      // known error was thrown, tell user
+      errorMessage = error.type;
+    } else if (error instanceof Error) {
+      // unknown error occurred in the client
+      console.error(error);
+      // hide the specifics of the error from user, if you want it open the console
+      errorMessage = "Something went wrong, try again!";
     } else {
-      // backend returned an unsuccessful code
+      // backend error, returned an unsuccessful code
       // response body may contain a message or clues as to what went wrong
       console.error(
         'Backend returned code ', error.status,
-        'body was: ', error.error);
+        'body was: ', error.error,
+        error);
+      // default message
+      errorMessage = "Marvel said: " + error.statusText;
+      // some specific messages to user
+      switch (error.status) {
+        case 401:
+          // 401	Invalid Hash	Occurs when a ts, hash and apikey parameter are sent but the hash is not valid per the above hash generation rule.
+          if (error.error.code === "InvalidCredentials") {
+            errorMessage = "The request to Marvel had an invalid key, was it set up?";
+          }
+          break;
+        case 409:
+          errorMessage = "The request I sent to Marvel was wrong, sorry";
+          break;
+        case 403:
+          // Forbidden	Occurs when a user with an otherwise authenticated request attempts to access an endpoint to which they do not have access.
+          errorMessage = "The request I sent to Marvel doesn't have permission";
+          break;
+      }
     }
-    // return an observable with a user-facing error message
-    return throwError(
-      'Getting character information failed; please try again.');
-  };
+    // return observable with a error message to the user
+    return throwError(errorMessage);
+  }
+  
 }
