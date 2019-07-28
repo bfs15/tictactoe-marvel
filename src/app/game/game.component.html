@@ -1,4 +1,5 @@
-<app-character-selection [playerNo]="playerNo" (playerSelectedEvent)="onPlayerSelected($event)"></app-character-selection>
+<app-character-selection *ngIf="!isBoardEnabled" [playerNo]="playerNo" (playerSelectedEvent)="onPlayerSelected($event)">
+</app-character-selection>
 <app-game-score [players]="players"></app-game-score>
 <app-tictactoe-board (endgameEvent)="onEndgameEvent($event)" [isEnabled]="isBoardEnabled" #boardComponent>
 </app-tictactoe-board>
