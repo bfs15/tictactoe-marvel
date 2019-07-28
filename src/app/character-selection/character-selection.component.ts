@@ -23,9 +23,13 @@ export class CharacterSelectionComponent implements OnInit {
   // number of players to select
   @Input() playerNo: number;
   // number of players to select
-  private validCharacters_: string[][] = [["Spider", "Thanos", "Satella"], ["Subaru", "Felt", "Emilia"]];
+  private validCharacters_: string[][] = [[], []];
 
   private players_: Player[];
+  // time for last keypress on any of the forms
+  private lastKeypressTime_: number = -1;
+  // interval to update autocomplete (API calls )
+  private readonly autocompleteInterval_: number = 2000;
 
   constructor(private characterService: CharacterService) { }
 
@@ -37,10 +41,40 @@ export class CharacterSelectionComponent implements OnInit {
     }
     this.isValidCharacterSelected_ = new Array<boolean>(this.playerNo).fill(false);
   }
+  // updates autocomplete, only happens at most in a this.autocompleteInterval_
+  // handles updates on last character the user inputs, waits until interval is satisfied
+  onInputName($event, playerNo){
+    let characterName = $event.target.value;
+    // time since last event
+    let elapsedTime = $event.timeStamp - this.lastKeypressTime_;
 
-  onKeydown($event, playerNo){
-    // TODO: update this.validCharacters_ list for autocomplete
-    // let characterName = $event.target.value;
+    // if time sice last event is bigger than interval, update
+    if (elapsedTime > this.autocompleteInterval_){
+      this.updateAutocomplete(playerNo, characterName);
+    } else {
+      // this could be the users last input for some time
+      // let's check if thats the case after the interval has passed
+      // remaining time for when you can update autocomplete again, according to autocompleteInterval_
+      let remainingTime = this.autocompleteInterval_ - (elapsedTime);
+      // execute code after this remainingTime
+      setTimeout(() => {
+          // if after some time, the lastKeypressTime_ is the same still,  update
+          // this was the users' last character pressed
+          if ($event.timeStamp == this.lastKeypressTime_) {
+            this.updateAutocomplete(playerNo, characterName);
+          }
+        },
+        // see if this was last event sent after the remaining time for the interval
+        remainingTime
+      )
+    }
+
+    // update timestamp
+    this.lastKeypressTime_ = $event.timeStamp;
+  }
+  updateAutocomplete(playerNo, characterName: string) {
+    this.characterService.getNameStartsWith(characterName).subscribe(characterNameList =>
+      this.validCharacters_[playerNo] = characterNameList);
   }
   
   onSubmit(form, playerNo: number) {
