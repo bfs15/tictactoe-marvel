@@ -115,7 +115,7 @@ export class CharacterService {
   private playerFromResponse(result: ICharacter): Player {
     return new Player(
       result.name, // name
-      result.thumbnail.path + result.thumbnail.extension // imageUrl
+      result.thumbnail.path + "." + result.thumbnail.extension // imageUrl
     );
   }
 
