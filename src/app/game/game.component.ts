@@ -15,7 +15,8 @@ export class GameComponent implements OnInit {
   players: Player[] = new Array<Player>(this.playerNo_);
   // whether board is at endgame state
   private isBoardEndgame_: boolean = false;
-  private isBoardEnabled: boolean = false;
+  // board is enabled after players selected characters
+  private isBoardEnabled_: boolean = false;
   // list of players' Indexes by turn order
   // [x] = y means player[y] goes at turn x
   private turnOrder_: number[];
@@ -32,7 +33,9 @@ export class GameComponent implements OnInit {
     // register player
     this.players[$event.index] = $event.player;
     // start the game if possible
-    if(this.areAllPlayersSelected()){
+    if (this.areAllPlayersSelected()) {
+      // enable board
+      this.isBoardEnabled_ = true;
       // start game
       this.chooseTurnOrder();
     }
@@ -76,7 +79,6 @@ export class GameComponent implements OnInit {
     this.chooseTurnOrder();
     // resets board
     this.isBoardEndgame_ = false;
-    this.isBoardEnabled = true;
     boardComponent.newBoard();
   }
 
@@ -115,5 +117,9 @@ export class GameComponent implements OnInit {
 
   get playerNo(){
     return this.playerNo_;
+  }
+  
+  get isBoardEnabled() {
+    return this.isBoardEnabled_;
   }
 }

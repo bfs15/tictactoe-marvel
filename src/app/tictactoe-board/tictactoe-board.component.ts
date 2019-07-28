@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { EndgameType, isEndgameType, EndgameStatus } from '../board';
 
 // This component should handle the game board according to tic-tac-toe rules
@@ -41,6 +41,8 @@ export class TictactoeBoardComponent implements OnInit {
   @Output() endgameEvent = new EventEmitter<EndgameStatus>();
   // emits event when turn/active player changes
   @Output() playerTurnEvent = new EventEmitter<PlayerSymbols>();
+  // If users can click on the board to play
+  @Input() isEnabled: boolean;
 
   // 2darray with board information
   private boardArray_: PlayerSymbols[][];
@@ -217,7 +219,7 @@ export class TictactoeBoardComponent implements OnInit {
   // returns true if movement is valid and made
   // returns false if movement is invalid
   makeMove(rowNo, colNo): boolean {
-    if (!this.isEndgame() && this.isEmpty(rowNo, colNo)) {
+    if (this.isPlayable && this.isEmpty(rowNo, colNo)) {
       // change symbol to whichever player is up
       this.boardArray_[rowNo][colNo] = this.currentTurn_;
       this.turnNo_++;
@@ -273,12 +275,16 @@ export class TictactoeBoardComponent implements OnInit {
     return this.boardArray_[rowNo][colNo];
   }
 
-  get boardArray(){
+  get boardArray(): PlayerSymbols[][] {
     return this.boardArray_;
   }
 
-  get turnNo(){
+  get turnNo(): number {
     return this.turnNo_
+  }
+
+  get isPlayable(): boolean {
+    return this.isEnabled && !this.isEndgame();
   }
 
 }
