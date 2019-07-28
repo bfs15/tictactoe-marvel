@@ -6,8 +6,10 @@
     <option *ngFor="let character of validCharacters[playerNo]" value="{{character}}"></option>
   </datalist>
   <form #f="ngForm" (ngSubmit)="onSubmit(f, playerNo)" novalidate>
-    <input type="text" name="name" attr.list="validCharacters-{{playerNo}}" placeholder="character name" autofocus
-      (keyup)="onInputName($event, playerNo)" autocomplete="off" ngModel/>
+    <input type="text" name="name" attr.list="validCharacters-{{playerNo}}"
+    autofocus required placeholder="character name"
+    (keyup)="onInputName($event, playerNo)" autocomplete="off" ngModel/>
     <button>Confirm</button>
+    <small *ngIf="nameError[playerNo]">{{nameError[playerNo]}}</small>
   </form>
 </div>
