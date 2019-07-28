@@ -7,7 +7,7 @@
   </datalist>
   <form #f="ngForm" (ngSubmit)="onSubmit(f, playerNo)" novalidate>
     <input type="text" name="name" attr.list="validCharacters-{{playerNo}}" placeholder="character name" autofocus
-      (keyup)="onKeydown($event, playerNo)" autocomplete="off" ngModel/>
+      (keyup)="onInputName($event, playerNo)" autocomplete="off" ngModel/>
     <button>Confirm</button>
   </form>
 </div>
