@@ -15,6 +15,8 @@ export class GameComponent implements OnInit {
   players: Player[] = new Array<Player>(this.playerNo_);
   // whether board is at endgame state
   private isBoardEndgame_: boolean = false;
+  // board is enabled after players selected characters
+  private isBoardEnabled_: boolean = false;
   // list of players' Indexes by turn order
   // [x] = y means player[y] goes at turn x
   private turnOrder_: number[];
@@ -23,14 +25,34 @@ export class GameComponent implements OnInit {
   }
 
   ngOnInit() {
-    // TODO: implement character seletion
     this.players = new Array<Player>(this.playerNo);
-
-    this.chooseTurnOrder();
   }
 
-  onPlayerSelected($event: SelectedCharacter){
+  // event from CharacterSelection, if all players chose, start game
+  onPlayerSelected($event: SelectedCharacter) {
+    // register player
     this.players[$event.index] = $event.player;
+    // start the game if possible
+    if (this.areAllPlayersSelected()) {
+      // enable board
+      this.isBoardEnabled_ = true;
+      // start game
+      this.chooseTurnOrder();
+    }
+  }
+
+  // returns true if all players are valid
+  areAllPlayersSelected(): boolean {
+    // for all indexes, check if they are valid
+    for (let index = 0; index < this.players.length; index++) {
+      // if invalid found, not all players are selected
+      if( this.players[index] == null) {
+        return false;
+      }
+    }
+    return true
+    // the below doesn't work...
+    // return this.players.every(player => !(player == null));
   }
 
   // return player index from his turn order
@@ -51,11 +73,13 @@ export class GameComponent implements OnInit {
     this.isBoardEndgame_ = true;
   }
 
-  // updates player turns according to this.turnOrder_
-  updatePlayerTurns(){
-    for (let turnNo = 0; turnNo < this.turnOrder_.length; turnNo++) {
-      this.players[this.indexFromTurnNo(turnNo)].turn = turnNo;      
-    }
+  // starts new match on the board
+  onResetBoard(event, boardComponent) {
+    // chooses new player order
+    this.chooseTurnOrder();
+    // resets board
+    this.isBoardEndgame_ = false;
+    boardComponent.newBoard();
   }
 
   // randomly assigns player turn order
@@ -80,15 +104,12 @@ export class GameComponent implements OnInit {
     this.updatePlayerTurns();
   }
 
-  // starts new match on the board
-  onResetBoard(event, boardComponent) {
-    // chooses new player order
-    this.chooseTurnOrder();
-    // resets board
-    this.isBoardEndgame_ = false;
-    boardComponent.newBoard();
+  // updates player turns according to this.turnOrder_
+  updatePlayerTurns() {
+    for (let turnNo = 0; turnNo < this.turnOrder_.length; turnNo++) {
+      this.players[this.indexFromTurnNo(turnNo)].turn = turnNo;
+    }
   }
-
 
   get isBoardEndgame(): boolean{
     return this.isBoardEndgame_;
@@ -96,5 +117,9 @@ export class GameComponent implements OnInit {
 
   get playerNo(){
     return this.playerNo_;
+  }
+  
+  get isBoardEnabled() {
+    return this.isBoardEnabled_;
   }
 }

@@ -17,6 +17,7 @@ describe('TictactoeBoardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TictactoeBoardComponent);
     component = fixture.componentInstance;
+    component.isEnabled = true;
     fixture.detectChanges();
   });
 
