@@ -23,9 +23,11 @@ export class CharacterSelectionComponent implements OnInit {
   // number of players to select
   @Input() playerNo: number;
   // number of players to select
-  private validCharacters_: string[][] = [["Spider", "Thanos", "Satella"], ["Subaru", "Felt", "Emilia"]];
+  private validCharacters_: string[][] = [[], []];
 
   private players_: Player[];
+  // time for last keypress on any of the forms
+  private lastKeypressTime_: number = -1;
 
   constructor(private characterService: CharacterService) { }
 
@@ -39,8 +41,12 @@ export class CharacterSelectionComponent implements OnInit {
   }
 
   onKeydown($event, playerNo){
-    // TODO: update this.validCharacters_ list for autocomplete
-    // let characterName = $event.target.value;
+    if ($event.timeStamp - this.lastKeypressTime_ > 200){
+      let characterName = $event.target.value;
+      this.characterService.getNameStartsWith(characterName).subscribe(characterNameList => 
+        this.validCharacters_[playerNo] = characterNameList);
+    }
+    this.lastKeypressTime_ = $event.timeStamp;
   }
   
   onSubmit(form, playerNo: number) {
