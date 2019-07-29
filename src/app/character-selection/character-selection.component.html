@@ -7,11 +7,18 @@
       <option *ngFor="let character of validCharacters[playerNo]" value="{{character}}"></option>
     </datalist>
     <form #f="ngForm" (ngSubmit)="onSubmit(f, playerNo)" novalidate>
-      <input type="text" name="name" attr.list="validCharacters-{{playerNo}}"
+      <input type="text" name="name" #name="ngModel" attr.list="validCharacters-{{playerNo}}"
       autofocus required placeholder="character name"
+      [class.input-invalid]="nameError[playerNo] && (name.dirty || name.touched)"
       (keyup)="onInputName($event, playerNo)" autocomplete="off" ngModel/>
-      <button class="btn">Confirm</button>
-      <small *ngIf="nameError[playerNo]">{{nameError[playerNo]}}</small>
+      <button class="btn">
+        Confirm
+      </button>
+      <div>
+        <small *ngIf="nameError[playerNo]" class="nameError text-error">
+          {{nameError[playerNo]}}
+        </small>
+      </div>
     </form>
   </span>
 </div>
