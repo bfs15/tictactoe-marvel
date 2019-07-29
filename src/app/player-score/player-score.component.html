@@ -1,9 +1,8 @@
 <div class="player" *ngIf="player" data-id="player-{{playerNo}}">
-  <div class="playerName" data-id="playerName-{{playerNo}}">{{player.name}}</div>
-
   <img class="playerImage" *ngIf="player.imageUrl" [src]="player.imageUrl" />
   <div class="playerImage" *ngIf="!player.imageUrl"></div>
+  
+  <div class="playerName" data-id="playerName-{{playerNo}}">{{player.name}}</div>
 
-  <div class="playerScore" data-id="playerScore-{{playerNo}}">{{player.score}}</div>
   <div *ngIf="player.turn == 0" class="playerTurn" data-id="playerTurn-{{playerNo}}">Goes first!</div>
 </div>

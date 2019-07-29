@@ -1,7 +1,9 @@
 
 
 .player {
-  background: #de1a1a;
+  height: 300px;
+  vertical-align: center;
+  margin-top: auto;
 }
 
 .playerName {
@@ -16,4 +18,7 @@
   margin-left: auto;
   margin-right: auto;
   height: 160px;
+  border-style: outset;
+  border-width: 5px;
+  border-color: #5a5a5a;
 }

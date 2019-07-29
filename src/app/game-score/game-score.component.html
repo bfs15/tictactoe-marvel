@@ -1,12 +1,14 @@
 
-<span class="playerSpan" class="playerSpan-0">
+<span class="playerSpan playerSpan-0">
   <app-player-score *ngIf="players[0] != null" [player]="players[0]" [playerNo]="0"></app-player-score>
 </span>
 
 <div class="playerScores">
-  Scores
+  <div class="playerScoreNumber">{{players[0].score}}</div>
+  <div class="versusSymbol">x</div>
+  <div class="playerScoreNumber">{{players[1].score}}</div>
 </div>
 
-<span class="playerSpan" class="playerSpan-1">
+<span class="playerSpan playerSpan-1">
   <app-player-score *ngIf="players[1] != null" [player]="players[1]" [playerNo]="1"></app-player-score>
 </span>
