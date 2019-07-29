@@ -3,7 +3,7 @@
 .player {
   height: 300px;
   vertical-align: center;
-  margin-top: auto;
+  padding: 15px;
 }
 
 .playerName {
@@ -21,4 +21,10 @@
   border-style: outset;
   border-width: 5px;
   border-color: #5a5a5a;
+}
+
+.playerTurn {
+  font-size: 30px;
+  font-family: Arial;
+  text-align: center;
 }
