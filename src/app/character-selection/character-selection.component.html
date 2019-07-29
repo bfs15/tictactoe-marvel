@@ -1,15 +1,17 @@
-<div *ngFor="let player of players; index as playerNo">
-  <h3>
-    Select your character
-  </h3>
-  <datalist id="validCharacters-{{playerNo}}">
-    <option *ngFor="let character of validCharacters[playerNo]" value="{{character}}"></option>
-  </datalist>
-  <form #f="ngForm" (ngSubmit)="onSubmit(f, playerNo)" novalidate>
-    <input type="text" name="name" attr.list="validCharacters-{{playerNo}}"
-    autofocus required placeholder="character name"
-    (keyup)="onInputName($event, playerNo)" autocomplete="off" ngModel/>
-    <button>Confirm</button>
-    <small *ngIf="nameError[playerNo]">{{nameError[playerNo]}}</small>
-  </form>
+<div class="playerSelection"  *ngFor="let player of players; index as playerNo">
+  <span class="playerSelection-{{playerNo}}">
+    <h3 class="selectionTitle">
+      Select your character
+    </h3>
+    <datalist id="validCharacters-{{playerNo}}">
+      <option *ngFor="let character of validCharacters[playerNo]" value="{{character}}"></option>
+    </datalist>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f, playerNo)" novalidate>
+      <input type="text" name="name" attr.list="validCharacters-{{playerNo}}"
+      autofocus required placeholder="character name"
+      (keyup)="onInputName($event, playerNo)" autocomplete="off" ngModel/>
+      <button class="btn">Confirm</button>
+      <small *ngIf="nameError[playerNo]">{{nameError[playerNo]}}</small>
+    </form>
+  </span>
 </div>
