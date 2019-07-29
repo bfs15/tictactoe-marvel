@@ -32,10 +32,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render title in a h1 tag', () => {
+  it('should render game', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toBeTruthy();
+    expect(compiled.querySelector('app-game').textContent).toBeTruthy();
   });
 });
