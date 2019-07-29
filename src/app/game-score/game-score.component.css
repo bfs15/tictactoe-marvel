@@ -1,25 +1,20 @@
 .playerSpan-0 {
   width: 40%;
   float: left;
-  height: 300px;
-  overflow: hidden;
-  background-image: linear-gradient(168deg, rgba(0, 0, 0, 1), rgba(255, 0, 0, 1));
+  /* background-image: linear-gradient(168deg, rgba(0, 0, 0, 0.8), rgba(255, 0, 0,  0.8)); */
 }
-
 
 .playerSpan-1 {
   width: 40%;
   float: right;
-  height: 300px;
-  overflow: hidden;
   /* gradient angle is the reflection of the first player's  */
   /* 192 = 168 - 2*(168 - 180) */
-  background-image: linear-gradient(192deg, rgba(0, 0, 0, 1), rgba(255, 0, 0, 1));
+  /* background-image: linear-gradient(192deg, rgba(0, 0, 0, 0.8), rgba(255, 0, 0,  0.8)); */
 }
 
 .playerScores {
   width: 20%;
-  height: 300px;
+  height: 310px;
   float: left;
 }
 
