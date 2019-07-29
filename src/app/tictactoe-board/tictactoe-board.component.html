@@ -1,9 +1,11 @@
 <table id="boardArray">
   <tr *ngFor="let row of boardArray; index as rowNo">
-    <td *ngFor="let col of boardArray[rowNo]; index as colNo">
-      <div data-id="{{rowNo}}-{{colNo}}" (click)="clickCell(rowNo, colNo)" class="pointer">
+    <td *ngFor="let col of boardArray[rowNo]; index as colNo"
+      (click)="clickCell(rowNo, colNo)"
+      data-id="{{rowNo}}-{{colNo}}">
+      <div class="tableCell pointer">
         {{getCellSymbolString(rowNo,colNo)}}
-        <img [src]="playerImage(rowNo,colNo)" />
+        <!-- <img [src]="playerImage(rowNo,colNo)" /> -->
       </div>
     </td>
   </tr>

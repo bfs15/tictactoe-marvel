@@ -10,8 +10,8 @@ import { EndgameType, isEndgameType, EndgameStatus } from '../board';
 // when a player moves on empty position it becomes his
 export enum PlayerSymbols {
   empty = -1,
-  x = 0, // first player
-  o = 1, // second player
+  X = 0, // first player
+  O = 1, // second player
 }
 
 // get player id from its symbol
@@ -75,7 +75,7 @@ export class TictactoeBoardComponent implements OnInit {
     this.turnNo_ = 0;
     this.endgameStatus_ = {type: EndgameType.none, playerId: -1};
     // first player is x
-    this.currentTurn_ = PlayerSymbols.x;
+    this.currentTurn_ = PlayerSymbols.X;
   }
 
   ngOnInit() {
@@ -231,11 +231,11 @@ export class TictactoeBoardComponent implements OnInit {
   nextPlayer(){
     // change current turn player
     switch (this.currentTurn_){
-    case PlayerSymbols.x:
-      this.currentTurn_ = PlayerSymbols.o;
+    case PlayerSymbols.X:
+      this.currentTurn_ = PlayerSymbols.O;
       break;
-    case PlayerSymbols.o:
-      this.currentTurn_ = PlayerSymbols.x;
+    case PlayerSymbols.O:
+      this.currentTurn_ = PlayerSymbols.X;
       break;
     }
   }
@@ -268,7 +268,12 @@ export class TictactoeBoardComponent implements OnInit {
 
   // get symbol string from cell position
   getCellSymbolString(rowNo, colNo): string{
-    return PlayerSymbols[this.boardArray_[rowNo][colNo]];
+    let cellSymbol: PlayerSymbols = this.boardArray_[rowNo][colNo];
+    if (cellSymbol == PlayerSymbols.empty){
+      return "";
+    }
+    // return the string of the enum
+    return PlayerSymbols[cellSymbol];
   }
 
   getCell(rowNo, colNo): PlayerSymbols {
