@@ -3,26 +3,36 @@
   cursor: pointer;
 }
 
-img {
-  width: 80px;
-}
-
 table {
   border: none;
   border-collapse: collapse;
+  font-size: 90px;
+  margin: auto;
+  table-layout: fixed;
+  text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.tableCell{
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  overflow-y: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transform: translateY(5%);
 }
 
 table td {
-  border-left: 4px solid #000;
-  padding: 14px;
-  width: 100px;
-  height: 100px;
+  border-left: 8px solid #000;
 }
 
 table tr {
-  border-top: 4px solid #000;
+  border-top: 8px solid #000;
 }
-
 
 table tr:first-child {
   border-top: none;

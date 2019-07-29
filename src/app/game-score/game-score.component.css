@@ -1,11 +1,19 @@
-.playerSpan-0 {
+.gameScore {
+  max-height: 320px;
+  width:100%;
+}
+
+.playerSpan {
   width: 40%;
+  min-height: 300px;
+}
+
+.playerSpan-0 {
   float: left;
   /* background-image: linear-gradient(168deg, rgba(0, 0, 0, 0.8), rgba(255, 0, 0,  0.8)); */
 }
 
 .playerSpan-1 {
-  width: 40%;
   float: right;
   /* gradient angle is the reflection of the first player's  */
   /* 192 = 168 - 2*(168 - 180) */
@@ -14,7 +22,7 @@
 
 .playerScores {
   width: 20%;
-  height: 310px;
+  height: 300px;
   float: left;
 }
 

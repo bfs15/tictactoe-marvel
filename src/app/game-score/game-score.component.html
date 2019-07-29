@@ -1,16 +1,18 @@
 
-<span class="playerSpan playerSpan-0">
-  <app-player-score *ngIf="players[0] != null" [player]="players[0]" [playerNo]="0"></app-player-score>
-</span>
+<div class="gameScore">
+  <span class="playerSpan playerSpan-0">
+    <app-player-score *ngIf="players[0] != null" [player]="players[0]" [playerNo]="0"></app-player-score>
+  </span>
 
-<div class="playerScores">
-  <div *ngIf="players[0] != null" class="playerScoreNumber">{{players[0].score}}</div>
-  <div *ngIf="players[0] == null" class="playerScoreNumber">0</div>
-  <div class="versusSymbol">x</div>
-  <div *ngIf="players[0] != null" class="playerScoreNumber">{{players[1].score}}</div>
-  <div *ngIf="players[0] == null" class="playerScoreNumber">0</div>
+  <div class="playerScores">
+    <div *ngIf="players[0] != null" class="playerScoreNumber">{{players[0].score}}</div>
+    <div *ngIf="players[0] == null" class="playerScoreNumber">0</div>
+    <div class="versusSymbol">x</div>
+    <div *ngIf="players[1] != null" class="playerScoreNumber">{{players[1].score}}</div>
+    <div *ngIf="players[1] == null" class="playerScoreNumber">0</div>
+  </div>
+
+  <span class="playerSpan playerSpan-1">
+    <app-player-score *ngIf="players[1] != null" [player]="players[1]" [playerNo]="1"></app-player-score>
+  </span>
 </div>
-
-<span class="playerSpan playerSpan-1">
-  <app-player-score *ngIf="players[1] != null" [player]="players[1]" [playerNo]="1"></app-player-score>
-</span>

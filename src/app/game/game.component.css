@@ -1,0 +1,10 @@
+.nextMatch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.buttonNextMatch {
+  transform: translateY(-35px);
+}

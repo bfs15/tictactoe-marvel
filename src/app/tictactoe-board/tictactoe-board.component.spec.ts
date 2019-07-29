@@ -36,9 +36,9 @@ describe('TictactoeBoardComponent', () => {
 
   it('should return matching endgame status for player turns', () => {
     // x is first player, id 0
-    expect(endgameStatusFromSymbol(PlayerSymbols.x)).toEqual({ type: EndgameType.win, playerId: 0 });
+    expect(endgameStatusFromSymbol(PlayerSymbols.X)).toEqual({ type: EndgameType.win, playerId: 0 });
     // x is second player, id 1
-    expect(endgameStatusFromSymbol(PlayerSymbols.o)).toEqual({ type: EndgameType.win, playerId: 1 });
+    expect(endgameStatusFromSymbol(PlayerSymbols.O)).toEqual({ type: EndgameType.win, playerId: 1 });
   })
 
   it('isEndgame should return false at the start', () => {
@@ -117,7 +117,7 @@ describe('TictactoeBoardComponent', () => {
   it('should emit player turn event on first valid move', (done) => {
     // after next click, should be PlayerSymbols.o turn
     let subscription = component.playerTurnEvent.subscribe(playerTurn => {
-      expect(playerTurn).toEqual(PlayerSymbols.o);
+      expect(playerTurn).toEqual(PlayerSymbols.O);
       done();
     });
     component.clickCell(0, 0); // first X play
@@ -127,7 +127,7 @@ describe('TictactoeBoardComponent', () => {
     component.clickCell(0, 0); // first X play
     // after next click, should be PlayerSymbols.x turn
     let subscription = component.playerTurnEvent.subscribe(g => {
-      expect(g).toEqual(PlayerSymbols.x);
+      expect(g).toEqual(PlayerSymbols.X);
       done();
     });
     component.clickCell(0, 2); // O play
@@ -137,7 +137,7 @@ describe('TictactoeBoardComponent', () => {
     component.clickCell(0, 0); // first X play
     // after next click, should be PlayerSymbols.x turn
     let playerTurnCallback = (g) => {
-      expect(g).toEqual(PlayerSymbols.x);
+      expect(g).toEqual(PlayerSymbols.X);
       done();
     }
     component.playerTurnEvent.subscribe(playerTurnCallback);
