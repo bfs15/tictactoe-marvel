@@ -10,6 +10,7 @@ import { By } from '@angular/platform-browser';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
 import { Player } from '../player';
+import { PlayerScoreComponent } from '../player-score/player-score.component';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -25,6 +26,7 @@ describe('GameComponent', () => {
       declarations: [
         GameComponent,
         GameScoreComponent,
+        PlayerScoreComponent,
         TictactoeBoardComponent,
         CharacterSelectionComponent,
       ],

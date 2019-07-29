@@ -8,6 +8,7 @@ import { GameScoreComponent } from './game-score/game-score.component';
 import { GameComponent } from './game/game.component';
 import { CharacterSelectionComponent } from './character-selection/character-selection.component';
 import { FormsModule } from '@angular/forms';
+import { PlayerScoreComponent } from './player-score/player-score.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { FormsModule } from '@angular/forms';
     TictactoeBoardComponent,
     GameScoreComponent,
     GameComponent,
-    CharacterSelectionComponent
+    CharacterSelectionComponent,
+    PlayerScoreComponent
   ],
   imports: [
     BrowserModule,

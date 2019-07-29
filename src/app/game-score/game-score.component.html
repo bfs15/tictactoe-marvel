@@ -1,11 +1,14 @@
-<div *ngFor="let player of players; index as playerNo">
-  <div *ngIf="player" data-id="player-{{playerNo}}">
-    <div class="playerName" data-id="playerName-{{playerNo}}">{{player.name}}</div>
 
-    <img class="playerImage" *ngIf="player.imageUrl" [src]="player.imageUrl" />
-    <div class="playerImage" *ngIf="!player.imageUrl"></div>
+<span class="playerSpan playerSpan-0">
+  <app-player-score *ngIf="players[0] != null" [player]="players[0]" [playerNo]="0"></app-player-score>
+</span>
 
-    <div class="playerScore" data-id="playerScore-{{playerNo}}">{{player.score}}</div>
-    <div *ngIf="player.turn == 0" class="playerTurn" data-id="playerTurn-{{playerNo}}">Goes first!</div>
-  </div>
+<div class="playerScores">
+  <div class="playerScoreNumber">{{players[0].score}}</div>
+  <div class="versusSymbol">x</div>
+  <div class="playerScoreNumber">{{players[1].score}}</div>
 </div>
+
+<span class="playerSpan playerSpan-1">
+  <app-player-score *ngIf="players[1] != null" [player]="players[1]" [playerNo]="1"></app-player-score>
+</span>

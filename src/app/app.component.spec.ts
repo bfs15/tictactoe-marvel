@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { TictactoeBoardComponent } from './tictactoe-board/tictactoe-board.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { PlayerScoreComponent } from './player-score/player-score.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -14,6 +15,7 @@ describe('AppComponent', () => {
         AppComponent,
         TictactoeBoardComponent,
         GameScoreComponent,
+        PlayerScoreComponent,
         GameComponent,
         CharacterSelectionComponent,
       ],
