@@ -1,6 +1,10 @@
-<app-character-selection *ngIf="!isBoardEnabled" [playerNo]="playerNo" (playerSelectedEvent)="onPlayerSelected($event)">
+<app-character-selection [style.visibility]="!isBoardEnabled ? 'visible' : 'hidden'" 
+  [playerNo]="playerNo" (playerSelectedEvent)="onPlayerSelected($event)">
 </app-character-selection>
 <app-game-score [players]="players"></app-game-score>
+<div class="nextMatch">
+<button class="btn buttonNextMatch" [style.visibility]="isBoardEndgame ? 'visible' : 'hidden'"
+  (click)="onResetBoard($event, boardComponent)">Next match</button>
+</div>
 <app-tictactoe-board (endgameEvent)="onEndgameEvent($event)" [isEnabled]="isBoardEnabled" #boardComponent>
 </app-tictactoe-board>
-<button *ngIf="isBoardEndgame" (click)="onResetBoard($event, boardComponent)">Next match</button>
