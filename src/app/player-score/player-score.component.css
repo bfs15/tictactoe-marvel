@@ -1,0 +1,19 @@
+
+
+.player {
+  background: #de1a1a;
+}
+
+.playerName {
+  font-size: 40px;
+  font-family: fantasy;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.playerImage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 160px;
+}

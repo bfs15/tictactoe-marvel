@@ -1,19 +1,19 @@
-#player-0 {
-  width: 50%;
+.playerSpan-0 {
+  width: 40%;
   float: left;
-  height: 230px;
-  overflow:hidden;
-  background: gray;
+  height: 300px;
+  overflow: hidden;
 }
 
-#player-1 {
-	width: 50%;
-	float: right;
-	height: 230px;
-	overflow:hidden;
-  background: gray;
+.playerScores {
+  width: 20%;
+  height: 300px;
+  float: left;
 }
 
-img {
-	height: 160px;
+.playerSpan-1 {
+  width: 40%;
+  float: right;
+  height: 300px;
+  overflow: hidden;
 }
