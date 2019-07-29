@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+  /* fill the screen*/
+  min-height: 100vh;
+  /* if this is > 0 the page scrolls when uneeded because of fill */
+  margin: 0px;
+
+  background: #e0e0e0;
+}
