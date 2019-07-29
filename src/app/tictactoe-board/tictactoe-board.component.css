@@ -16,14 +16,20 @@ table {
   user-select: none;
 }
 
-.tableCell{
+.tableCellDiv{
   width: 120px;
   height: 120px;
   overflow: hidden;
   overflow-y: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  /* make it more centered */
   transform: translateY(5%);
+}
+
+.tableCell {
+  width: 124px;
+  height: 124px;
 }
 
 table td {
