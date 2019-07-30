@@ -1,3 +1,4 @@
+import { FooterComponent } from './footer/footer.component';
 import { CharacterSelectionComponent } from './character-selection/character-selection.component';
 import { GameComponent } from './game/game.component';
 import { GameScoreComponent } from './game-score/game-score.component';
@@ -18,6 +19,7 @@ describe('AppComponent', () => {
         PlayerScoreComponent,
         GameComponent,
         CharacterSelectionComponent,
+        FooterComponent,
       ],
       imports: [
         HttpClientModule,
