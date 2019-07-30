@@ -4,33 +4,33 @@ This is an webpage in which you can play tic-tac-toe.
 
 Both players choose a Marvel character by name, their images will appear on the scoreboard and then you can start playing. (Data provided by Marvel. © 2014 Marvel)
 
-It has animations when scores go up and when you make a move on the board, very fancy!
+It has animations when scores go up and when you make a move on the board, it even features an autocomplete feature in the character selection! Very fancy!
 
 ## Layout
 
 This webpage has some components in the following layout:
 
 * App
-	* Game
+   * Game
 
-		responsible for managing the child component's events, choosing players turn order, waiting for characters to be selected to allow plays on the board, and allowing the user to reset the board.
+      responsible for managing the child component's events, choosing players turn order, waiting for characters to be selected to allow plays on the board, and allowing the user to reset the board.
 
-		* CharacterSelection
+      * CharacterSelection
 
-			where players input a characters name and it's data CharacterService. Outputs events when characters are selected, with info about them and which player chose.
+         where players input a characters name and it's data CharacterService. Outputs events when characters are selected, with info about them and which player chose.
 
-		* GameScore
-		 	* PlayerScore
+      * GameScore
+          * PlayerScore
 
-			characters (with images) and scores are displayed
+         characters (with images) and scores are displayed
 
-		* TictactoeBoard
+      * TictactoeBoard
 
-			game board where players interact, implements the game logic. Outputs an event about board end states (who, if any, won).
+         game board where players interact, implements the game logic. Outputs an event about board end states (who, if any, won).
 
-	* Footer
-	
-		Information about marvel and links.
+   * Footer
+   
+      Information about marvel and links.
 
 Other relevant files:
 
@@ -85,4 +85,3 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 ### Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
