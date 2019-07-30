@@ -8,6 +8,7 @@ import { TictactoeBoardComponent } from './tictactoe-board/tictactoe-board.compo
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { PlayerScoreComponent } from './player-score/player-score.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -24,6 +25,7 @@ describe('AppComponent', () => {
       imports: [
         HttpClientModule,
         FormsModule,
+        BrowserAnimationsModule,
       ]
     }).compileComponents();
   }));
