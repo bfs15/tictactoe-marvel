@@ -5,11 +5,31 @@
   </span>
 
   <div class="playerScores">
-    <div *ngIf="players[0] != null" class="playerScoreNumber">{{players[0].score}}</div>
-    <div *ngIf="players[0] == null" class="playerScoreNumber">0</div>
-    <div class="versusSymbol">x</div>
-    <div *ngIf="players[1] != null" class="playerScoreNumber">{{players[1].score}}</div>
-    <div *ngIf="players[1] == null" class="playerScoreNumber">0</div>
+    <!-- first row -->
+    <a class="playerScoreFloat" [@float]=players[0].score>
+      {{floatText}}
+    </a>
+    <a class="playerScoreFloat" [@float]=players[1].score>
+      {{floatText}}
+    </a>
+    <!-- second row -->
+    <div *ngIf="players[0] != null" class="playerScoreBoard playerScoreNumber">
+      {{players[0].score}}
+    </div>
+    <div *ngIf="players[0] == null" class="playerScoreBoard playerScoreNumber">
+      0
+    </div>
+
+    <div class="playerScoreBoard versusSymbol">
+      x
+    </div>
+
+    <div *ngIf="players[1] != null" class="playerScoreBoard playerScoreNumber">
+      {{players[1].score}}
+    </div>
+    <div *ngIf="players[1] == null" class="playerScoreBoard playerScoreNumber">
+      0
+    </div>
   </div>
 
   <span class="playerSpan playerSpan-1">

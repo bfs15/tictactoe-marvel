@@ -9,6 +9,7 @@ import { GameComponent } from './game/game.component';
 import { CharacterSelectionComponent } from './character-selection/character-selection.component';
 import { FormsModule } from '@angular/forms';
 import { PlayerScoreComponent } from './player-score/player-score.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { PlayerScoreComponent } from './player-score/player-score.component';
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     HttpClientModule,

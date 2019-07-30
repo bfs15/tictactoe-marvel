@@ -1,11 +1,32 @@
 <table id="boardArray">
-  <tr *ngFor="let row of boardArray; index as rowNo">
-    <td *ngFor="let col of boardArray[rowNo]; index as colNo"
+  <tr *ngFor="let row of boardArray; trackBy: index; index as rowNo">
+    <!-- #### This ngFor loop makes animations buggy (also updates a wrong cell) -->
+    <!-- <td *ngFor="let col of boardArray[rowNo]; index as colNo"
+      class="tableCell"
       (click)="clickCell(rowNo, colNo)"
       data-id="{{rowNo}}-{{colNo}}">
-      <div class="tableCell pointer">
+      <div *ngIf="getCellSymbolString(rowNo,colNo) !== ''" class="tableCell pointer"
+      data-id="boardDiv{{rowNo}}-{{colNo}}" @fade>
         {{getCellSymbolString(rowNo,colNo)}}
-        <!-- <img [src]="playerImage(rowNo,colNo)" /> -->
+      </div>
+    </td> -->
+
+    <td class="tableCell"
+      (click)="clickCell(rowNo, 0)" data-id="{{rowNo}}-{{0}}">
+      <div *ngIf="getCellSymbolString(rowNo,0) !== ''" class="tableCellDiv pointer" @fade>
+        {{getCellSymbolString(rowNo,0)}}
+      </div>
+    </td>
+    <td class="tableCell"
+      (click)="clickCell(rowNo, 1)" data-id="{{rowNo}}-{{1}}">
+      <div *ngIf="getCellSymbolString(rowNo,1) !== ''" class="tableCellDiv pointer" @fade>
+        {{getCellSymbolString(rowNo,1)}}
+      </div>
+    </td>
+    <td class="tableCell"
+      (click)="clickCell(rowNo, 2)" data-id="{{rowNo}}-{{2}}">
+      <div *ngIf="getCellSymbolString(rowNo,2) !== ''" class="tableCellDiv pointer" @fade>
+        {{getCellSymbolString(rowNo,2)}}
       </div>
     </td>
   </tr>

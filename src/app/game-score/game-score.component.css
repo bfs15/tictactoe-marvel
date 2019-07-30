@@ -26,25 +26,32 @@
   float: left;
 }
 
-.playerScoreNumber {
+.playerScoreFloat{
+  text-align: center;
+  opacity: 0;
   position: relative;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 7%;
+  width: 50%;
+  display: inline-grid;
+  font-size: 1.5em;
+}
+
+.playerScoreBoard {
+  position: relative;
+  top: 7%;
   float: left;
   text-align: center;
+  line-height: 100px;
+}
+
+.playerScoreNumber {
   width: 45%;
   font-size: 80px;
   font-weight: 700;
 }
 
 .versusSymbol {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  float: left;
-  text-align: center;
   width: 10%;
   font-size: 40px;
   font-family: monospace;
-  /* margin-top: 40px; */
 }

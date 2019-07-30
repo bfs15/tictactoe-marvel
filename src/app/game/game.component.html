@@ -3,8 +3,10 @@
 </app-character-selection>
 <app-game-score [players]="players"></app-game-score>
 <div class="nextMatch">
-<button class="btn buttonNextMatch" [style.visibility]="isBoardEndgame ? 'visible' : 'hidden'"
-  (click)="onResetBoard($event, boardComponent)">Next match</button>
+	<button class="btn buttonNextMatch" [style.visibility]="isBoardEndgame ? 'visible' : 'hidden'"
+		(click)="onResetBoard($event, boardComponent)">
+		Next match
+	</button>
 </div>
 <app-tictactoe-board (endgameEvent)="onEndgameEvent($event)" [isEnabled]="isBoardEnabled" #boardComponent>
 </app-tictactoe-board>
