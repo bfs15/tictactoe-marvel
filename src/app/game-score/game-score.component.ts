@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Player } from '../player';
 import { floatAnimation } from '../animations';
 
-// receives information about two players and displays them
+/** Pure component receives information about two players and displays them*/
 @Component({
   selector: 'app-game-score',
   templateUrl: './game-score.component.html',
@@ -12,7 +12,9 @@ import { floatAnimation } from '../animations';
   ]
 })
 export class GameScoreComponent {
+  /** Players to display the score */
   @Input() players: Player[];
+  /** what text appears above the score when someone wins */
   private floatText_: string = "+1";
 
   get floatText(){
