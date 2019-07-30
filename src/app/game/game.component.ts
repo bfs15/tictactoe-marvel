@@ -3,19 +3,24 @@ import { Component, OnInit } from '@angular/core';
 import { EndgameStatus, EndgameType } from '../board';
 import { SelectedCharacter } from '../character-selection/character-selection.component';
 
+/** 
+ * The layout and control to the entire game.
+ * 
+ * Responsible for managing the child component's events, choosing players turn order, waiting for characters to be selected to allow plays on the board, and allowing the user to reset the board.
+*/
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
-  // number of players
+  /** number of players */
   private playerNo_: number = 2;
-  // list of players, undefined until selected by users
+  /** list of players, undefined until selected by users */
   players: Player[] = new Array<Player>(this.playerNo_);
-  // whether board is at endgame state
+  /** whether board is at endgame state */
   private isBoardEndgame_: boolean = false;
-  // board is enabled after players selected characters
+  /** board is enabled after players selected characters */
   private isBoardEnabled_: boolean = false;
   // list of players' Indexes by turn order
   // [x] = y means player[y] goes at turn x
@@ -28,7 +33,7 @@ export class GameComponent implements OnInit {
     this.players = new Array<Player>(this.playerNo);
   }
 
-  // event from CharacterSelection, if all players chose, start game
+  /** event from CharacterSelection, if all players chose, start game */
   onPlayerSelected($event: SelectedCharacter) {
     // register player
     this.players[$event.index] = $event.player;
@@ -41,7 +46,7 @@ export class GameComponent implements OnInit {
     }
   }
 
-  // returns true if all players are valid
+  /** returns true if all players are valid */
   areAllPlayersSelected(): boolean {
     // for all indexes, check if they are valid
     for (let index = 0; index < this.players.length; index++) {
@@ -55,13 +60,13 @@ export class GameComponent implements OnInit {
     // return this.players.every(player => !(player == null));
   }
 
-  // return player index from his turn order
-  // id is the turn order the player goes at (playerId 0 goes first)
+  /** return player index from his turn order
+    * id is the turn order the player goes at (playerId 0 goes first) */
   indexFromTurnNo(id: number): number{
     return this.turnOrder_[id];
   }
 
-  // add to winning players score
+  /** add to winning players score */
   onEndgameEvent(event: EndgameStatus){
     // endgameStatus has info about how the game ended
     if (event.type == EndgameType.win) {
@@ -73,7 +78,7 @@ export class GameComponent implements OnInit {
     this.isBoardEndgame_ = true;
   }
 
-  // starts new match on the board
+  /** starts new match on the board */
   onResetBoard(event, boardComponent) {
     // chooses new player order
     this.chooseTurnOrder();
@@ -82,7 +87,7 @@ export class GameComponent implements OnInit {
     boardComponent.newBoard();
   }
 
-  // randomly assigns player turn order
+  /** randomly assigns player turn order */
   chooseTurnOrder(){
     // make turn order list (list player indexes in turn order)
     // equal chance of choosing any index
@@ -104,7 +109,7 @@ export class GameComponent implements OnInit {
     this.updatePlayerTurns();
   }
 
-  // updates player turns according to this.turnOrder_
+  /** updates player turns according to this.turnOrder_ */
   updatePlayerTurns() {
     for (let turnNo = 0; turnNo < this.turnOrder_.length; turnNo++) {
       this.players[this.indexFromTurnNo(turnNo)].turn = turnNo;

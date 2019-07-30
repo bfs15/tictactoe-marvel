@@ -3,38 +3,42 @@ import { Player } from './../player';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
+/** Interface used in output events with character and user info */
 export interface SelectedCharacter {
+  /** which user chose */
   index: number,
+  /** player info (it has the character) */
   player: Player,
 }
 
-// component allow users to select characters
-// emits event with SelectedCharacter
+/** component allow users to select characters
+ * emits event with SelectedCharacter */
 @Component({
   selector: 'app-character-selection',
   templateUrl: './character-selection.component.html',
   styleUrls: ['./character-selection.component.css']
 })
 export class CharacterSelectionComponent implements OnInit {
-  // emits event when character is selected
+  /** emits event when character is selected */
   @Output() playerSelectedEvent = new EventEmitter<SelectedCharacter>();
-  // if the character user selected is valid right now
+  /** if the character user selected is valid right now */
   private isValidCharacterSelected_: boolean[];
-  // number of players to select
+  /** number of players to select */
   @Input() playerNo: number;
-  // number of players to select
+  /** number of players to select */
   private validCharacters_: string[][] = [[], []];
 
   private players_: Player[];
-  // time for last keypress on any of the forms
+  /** time for last keypress on any of the forms */
   private lastKeypressTime_: number = -1;
-  // interval to update autocomplete (API calls )
+  /** interval to update autocomplete (API calls ) */
   private readonly autocompleteInterval_: number = 2000;
+  /** error, if any, that happened with the name selected by user */
   private nameError_: string[];
 
   constructor(private characterService: CharacterService) { }
 
-  // fill arrays according to @Input() playerNo
+  /** fill arrays according to @Input() playerNo */
   ngOnInit() {
     this.players_ = new Array<Player>(this.playerNo);
     for (let i = 0; i < this.players_.length; i++) {
@@ -44,8 +48,8 @@ export class CharacterSelectionComponent implements OnInit {
     this.nameError_ = new Array<string>(this.playerNo).fill("");
   }
 
-  // updates autocomplete, only happens at most in a this.autocompleteInterval_
-  // handles updates on last character the user inputs, waits until interval is satisfied
+  /** updates autocomplete, only happens at most in a this.autocompleteInterval_
+   * handles updates on last character the user inputs, waits until interval is satisfied */
   onInputName($event, playerNo){
     let characterName = $event.target.value;
     // time since last event
@@ -76,13 +80,13 @@ export class CharacterSelectionComponent implements OnInit {
     this.lastKeypressTime_ = $event.timeStamp;
   }
 
-  // makes request to service to return character names that start with 'characterName'
+  /** makes request to service to return character names that start with 'characterName' */
   updateAutocomplete(playerNo, characterName: string) {
     this.characterService.getNameStartsWith(characterName).subscribe(characterNameList =>
       this.validCharacters_[playerNo] = characterNameList);
   }
   
-  // when user tries to confirm his selection
+  /** when user tries to confirm his selection */
   onSubmit(form, playerNo: number) {
     let characterName = form.value.name;
     this.characterService.getByName(characterName).subscribe(
@@ -101,15 +105,15 @@ export class CharacterSelectionComponent implements OnInit {
     );
   }
   
-  // to display errors
+  /** to display errors */
   get nameError(){
     return this.nameError_;
   }
-  // to display selection
+  /** to display selection */
   get players(){
     return this.players_;
   }
-  // to autocomplete
+  /** to autocomplete */
   get validCharacters(){
     return this.validCharacters_;
   }
