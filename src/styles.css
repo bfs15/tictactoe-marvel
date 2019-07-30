@@ -26,6 +26,11 @@ a {
   border-color: #ca0000
 }
 
+/* floating text should be invisible while not in animation */
+.floatText {
+  opacity: 0;
+}
+
 .btn:hover {
   background-color: #525252;
 }

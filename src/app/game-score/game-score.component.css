@@ -28,13 +28,13 @@
 
 .playerScoreFloat{
   text-align: center;
-  opacity: 0;
   position: relative;
   top: 7%;
   width: 50%;
   display: inline-grid;
   font-size: 1.5em;
 }
+
 
 .playerScoreBoard {
   position: relative;

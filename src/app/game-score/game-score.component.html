@@ -6,11 +6,15 @@
 
   <div class="playerScores">
     <!-- first row -->
-    <a class="playerScoreFloat" [@float]=players[0].score>
-      {{floatText}}
+    <a class="playerScoreFloat">
+      <a  class="floatText" *ngIf="players[0] != null" [@float]=players[0].score>
+        {{floatText}}
+      </a>
     </a>
-    <a class="playerScoreFloat" [@float]=players[1].score>
-      {{floatText}}
+    <a class="playerScoreFloat">
+      <a  class="floatText" *ngIf="players[1] != null" [@float]=players[1].score>
+        {{floatText}}
+      </a>
     </a>
     <!-- second row -->
     <div *ngIf="players[0] != null" class="playerScoreBoard playerScoreNumber">
