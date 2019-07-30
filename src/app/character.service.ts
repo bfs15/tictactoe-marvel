@@ -13,17 +13,17 @@ import { ICharacter, IMarvelResponse} from './marvel-api';
   providedIn: 'root'
 })
 export class CharacterService {
-  // base Url
+  /** base Url */
   private readonly url_: string = environment.marvelApiUrl;
-  // url for character requests
+  /** url for character requests */
   private readonly urlCharacters_: string = `${this.url_}/v1/public/characters`;
-  // api key for request parameters
+  /** api key for request parameters */
   private readonly apiKey_: string = environment.marvelApiKey;
 
   constructor(private http: HttpClient) {
   }
 
-  // create and setup parameters for MarvelAPI request
+  /** create and setup parameters for MarvelAPI request */
   createParams(): HttpParams {
     let timestamp = String(new Date().getTime());
     let hash = Md5.hashAsciiStr(timestamp + secrets.marvelApiKeyPrivate + this.apiKey_);
@@ -33,7 +33,7 @@ export class CharacterService {
       .set('hash', hash.toString())
   }
 
-  // returns array with valid character names that start with 'name'
+  /** returns array with valid character names that start with 'name' */
   getNameStartsWith(name: string): Observable<string[]> {
     const url = this.urlCharacters_;
     let params = this.createParams().set('nameStartsWith', name);
@@ -50,7 +50,7 @@ export class CharacterService {
       );
   }
 
-  // returns valid character with 'name' (if it exists)
+  /** returns valid character with 'name' (if it exists) */
   getByName(name: string): Observable<Player> {
     const url = this.urlCharacters_;
     let params = this.createParams().set('name', name);
@@ -70,15 +70,16 @@ export class CharacterService {
         catchError(this.handleError)
       );
   }
-  // builds a Player from an ICharacter received from backend
+  /** builds a Player from an ICharacter received from backend */
   private playerFromResponse(result: ICharacter): Player {
     return new Player(
-      result.name, // name
-      result.thumbnail.path + "." + result.thumbnail.extension // imageUrl
+      result.name,
+      // imageUrl
+      result.thumbnail.path + "." + result.thumbnail.extension
     );
   }
 
-  // error inspection
+  /** error inspection */
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = "";
     if (error.error instanceof ErrorEvent) {
