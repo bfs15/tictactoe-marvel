@@ -2,7 +2,8 @@
 	width:50%;
 	float: left;
 	text-align: center;
-	height: 130px;
+	height: 5em;
+	padding-top: 3em;	
 }
 
 input {
