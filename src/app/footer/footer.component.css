@@ -1,0 +1,18 @@
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: #e0e0e0;
+  text-align: center;
+  line-height: 1.7em;
+  height: 1.7em;
+}
+
+.footerIcon {
+	height: 90%;
+	vertical-align: middle;
+	padding-left: 1em;
+	padding-right: 1em;
+}
