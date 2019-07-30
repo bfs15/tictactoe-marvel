@@ -33,9 +33,29 @@ a {
 
 .btn:hover {
   background-color: #525252;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.14),
+  0 6px 2px -4px rgba(0, 0, 0, 0.12),
+  0 2px 10px 0 rgba(0, 0, 0, 0.2);
 }
 
 .btn {
+  color: #fff;
+  background-color: #383838;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+  0 3px 1px -2px rgba(0, 0, 0, 0.12),
+  0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  box-sizing: inherit;
+  border: none;
+  display: inline-block;
+  height: 2em;
+  padding: 0 8px;
+  padding-top: 0px;
+  padding-right: 8px;
+  padding-bottom: 0px;
+  padding-left: 8px;
+  transition: background-color .3s ease-out;
+  transition: box-shadow .3s ease-out;
+
   position: relative;
   cursor: pointer;
   display: inline-block;
@@ -50,25 +70,6 @@ a {
   text-align: center;
   vertical-align: middle;
   letter-spacing: .5px;
-  
-  -webkit-transition: 1s ease-out;
-  transition: 1s ease-out;
-  color: #fff;
-  background-color: #383838;
-
-  transition: background-color .2s ease-out;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
-  0 3px 1px -2px rgba(0, 0, 0, 0.12),
-  0 1px 5px 0 rgba(0, 0, 0, 0.2);
-  box-sizing: inherit;
-  border: none;  
-  display: inline-block;
-  height: 2em;
-  padding: 0 8px;
-  padding-top: 0px;
-  padding-right: 8px;
-  padding-bottom: 0px;
-  padding-left: 8px;
 }
 
 input:focus {
