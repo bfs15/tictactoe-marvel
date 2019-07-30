@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { EndgameType, isEndgameType, EndgameStatus } from '../board';
-import { state, trigger, style, animate, transition } from '@angular/animations';
+import { fadeAnimation } from '../animations';
 
 // This component should handle the game board according to tic-tac-toe rules
 // Creates an event when board reaches endgame state (with winner info)
@@ -37,12 +37,7 @@ export let endgameStatusFromSymbol = (playerSymbol: PlayerSymbols): EndgameStatu
   templateUrl: './tictactoe-board.component.html',
   styleUrls: ['./tictactoe-board.component.css'],
   animations: [
-    trigger('fade',[
-      state('void', style({transform: 'scale(0.01)',})),
-      transition(':enter, :leave',[
-        animate(150)
-      ])
-    ])
+    fadeAnimation,
   ]
 })
 export class TictactoeBoardComponent implements OnInit {
