@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { GameScoreComponent } from './game-score.component';
 import { Player } from '../player';
 import { PlayerScoreComponent } from '../player-score/player-score.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 describe('GameScoreComponent', () => {
@@ -16,7 +17,10 @@ describe('GameScoreComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [GameScoreComponent, PlayerScoreComponent]
+      declarations: [GameScoreComponent, PlayerScoreComponent],
+      imports: [
+        BrowserAnimationsModule,
+      ]
     })
       .compileComponents();
 

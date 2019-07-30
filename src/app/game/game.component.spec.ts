@@ -11,6 +11,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
 import { Player } from '../player';
 import { PlayerScoreComponent } from '../player-score/player-score.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -33,6 +34,7 @@ describe('GameComponent', () => {
       imports: [
         HttpClientTestingModule,
         FormsModule,
+        BrowserAnimationsModule,
       ]
     })
     .compileComponents();
