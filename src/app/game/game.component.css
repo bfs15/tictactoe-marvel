@@ -6,5 +6,6 @@
 }
 
 .buttonNextMatch {
-  transform: translateY(-35px);
+  top: -30px;
+  font-size: 20px;
 }
