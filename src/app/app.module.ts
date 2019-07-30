@@ -10,6 +10,7 @@ import { CharacterSelectionComponent } from './character-selection/character-sel
 import { FormsModule } from '@angular/forms';
 import { PlayerScoreComponent } from './player-score/player-score.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     GameScoreComponent,
     GameComponent,
     CharacterSelectionComponent,
-    PlayerScoreComponent
+    PlayerScoreComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

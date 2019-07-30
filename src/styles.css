@@ -6,9 +6,15 @@ body {
   /* if this is > 0 the page scrolls when uneeded because of fill */
   margin: 0px;
 
-  background: #e0e0e0;
+  background: #eeeeee;
   font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  /* no underline */
+  text-decoration: none;
 }
 
 .text-error {
