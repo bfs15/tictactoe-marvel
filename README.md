@@ -4,7 +4,7 @@ This is an webpage in which you can play tic-tac-toe.
 
 Both players choose a Marvel character by name, their images will appear on the scoreboard and then you can start playing. (Data provided by Marvel. © 2014 Marvel)
 
-It has animations when scores go up and when you make a move on the board, it even features an autocomplete feature in the character selection! Very fancy!
+It has animations when scores go up and when you make a move on the board; it even features an autocomplete in the character selection! Very fancy!
 
 ## Layout
 
