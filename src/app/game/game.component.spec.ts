@@ -17,11 +17,6 @@ describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
   
-  let addPlayers = (component: GameComponent) => {
-    component.onPlayerSelected({ index: 0, player: new Player("Thanos") });
-    component.onPlayerSelected({ index: 1, player: new Player("Spider-Man") });
-  }
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -38,15 +33,18 @@ describe('GameComponent', () => {
       ]
     })
     .compileComponents();
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
 
+    let addPlayers = (component: GameComponent) => {
+      component.onPlayerSelected({ index: 0, player: new Player("Thanos") });
+      component.onPlayerSelected({ index: 1, player: new Player("Spider-Man") });
+    }
     addPlayers(component);
-  });
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
