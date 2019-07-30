@@ -63,8 +63,7 @@ a {
   box-sizing: inherit;
   border: none;  
   display: inline-block;
-  height: 30px;
-  line-height: 30px;
+  height: 2em;
   padding: 0 8px;
   padding-top: 0px;
   padding-right: 8px;
